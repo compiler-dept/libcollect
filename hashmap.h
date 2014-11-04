@@ -24,4 +24,4 @@ void hashmap_free(struct hashmap *table);
 void *hashmap_put(struct hashmap **table, const char *key, void *value);
 void *hashmap_get(struct hashmap *table, const char *key);
 
-#endif				/* end of include guard: HASHTABLE_H */
+#endif /* HASHTABLE_H */

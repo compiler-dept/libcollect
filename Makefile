@@ -3,7 +3,7 @@ define \n
 
 endef
 
-CFLAGS=-g -std=gnu99
+CFLAGS=-g -Wall -std=c11
 LDFLAGS=-L. -lcollect
 
 SOURCES=$(wildcard *.c)
@@ -14,7 +14,7 @@ TEST_OBJECTS=$(patsubst %.check, %.o, $(TEST_SOURCES)) \
 	$(patsubst %.check, %.c, $(TEST_SOURCES))
 TESTS=$(patsubst %.check, %, $(TEST_SOURCES))
 
-.PHONY: all test clean
+.PHONY: all test clean docs
 
 all: libcollect.a
 
@@ -30,5 +30,9 @@ tests/%_tests.c: tests/%_tests.check
 tests/%_tests: tests/%_tests.c libcollect.a
 	$(CC) $(CFLAGS) `pkg-config --cflags --libs check` -o $@ $< $(LDFLAGS)
 
+docs:
+	doxygen docs/Doxyfile
+
 clean:
 	rm -f libcollect.a $(OBJECTS) $(TEST_OBJECTS) $(TESTS)
+	rm -rf docs/html docs/latex
