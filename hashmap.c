@@ -32,10 +32,6 @@ struct hashmap *hashmap_alloc(int capacity)
     return new_table;
 }
 
-/**
- * @brief Free hash table.
- * @detail Uses free.
- */
 void hashmap_free(struct hashmap *table)
 {
     if (!table) {
@@ -62,11 +58,6 @@ struct hashmap *clone_and_double(struct hashmap *table)
     return new_table;
 }
 
-/**
- * @brief Insert value into hash table. If *table is NULL, allocate new hashmap.
- * @detail Insert using quadratic probing as collision strategy.
- * Double capacity when size > (0.7 * capacity).
- */
 void *hashmap_put(struct hashmap **table, const char *key, void *value)
 {
     if (*table == NULL) {
@@ -104,10 +95,6 @@ void *hashmap_put(struct hashmap **table, const char *key, void *value)
     return ret;
 }
 
-/**
- * @brief Get value from hash table.
- * @detail If table is NULL, NULL is returned for any key.
- */
 void *hashmap_get(struct hashmap *table, const char *key)
 {
     void *value = NULL;
