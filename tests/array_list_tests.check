@@ -1,0 +1,9 @@
+#include <stdio.h>
+#include "../array_list.h"
+
+#test array_list
+    struct array_list *al = NULL;
+    int i = 5;
+    array_list_set(&al, 98, &i);
+
+    ck_assert(*((int *)array_list_get(&al, 98)) == 5);
