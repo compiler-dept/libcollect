@@ -34,3 +34,6 @@ tests/*_tests
 # Documentation
 docs/html
 docs/latex
+
+# Misc
+*.orig
