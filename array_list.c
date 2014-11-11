@@ -24,22 +24,24 @@ struct array_list *expand_list(struct array_list **al, int idx)
 {
     struct array_list *temp = *al;
     int arc = 0;
-    int i = 1;
+    int i = 0;
 
     do {
-        arc = pow(2, ARRAY_LIST_INITIAL_CAPACITY_EXPONENT + i);
-
         if (temp == NULL) {
+            arc = pow(2, ARRAY_LIST_INITIAL_CAPACITY_EXPONENT);
             temp = malloc(sizeof(struct array_list) + sizeof(void *) * arc);
-            al = &temp;
-        } else {
-            arc *= 2;
+            temp->next = NULL;
+            temp->arc = arc;
+            *al = temp;
+        } else if (temp->next == NULL) {
+            arc = pow(2, ARRAY_LIST_INITIAL_CAPACITY_EXPONENT + (i == 0 ? 0 : i));
             temp->next = malloc(sizeof(struct array_list) + sizeof(void *) * arc);
+            temp->next->next = NULL;
+            temp->next->arc = arc;
+            temp = temp->next;
+        } else {
             temp = temp->next;
         }
-
-        temp->arc = arc;
-        temp->next = NULL;
     } while(++i < chunk(idx));
 
     return temp;
@@ -52,6 +54,9 @@ void array_list_set(struct array_list **al, int idx, void *elem)
     if (*al) {
         if (idx < pow(2, ARRAY_LIST_INITIAL_CAPACITY_EXPONENT)) {
             (*al)->arv[idx] = elem;
+        } else {
+            temp = expand_list(al, idx);
+            temp->arv[idx - offset(idx)] = elem;
         }
     } else {
         temp = expand_list(al, idx);
@@ -63,7 +68,7 @@ void *array_list_get(struct array_list **al, int idx)
 {
     struct array_list *temp = *al;
 
-    for (int i = 0; i <= chunk(idx); i++) {
+    for (int i = 0; i < chunk(idx); i++) {
         if (temp && temp->next) {
             temp = temp->next;
         } else {

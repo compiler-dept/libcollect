@@ -1,9 +1,21 @@
 #include <stdio.h>
 #include "../array_list.h"
 
-#test array_list
+#test array_list_in_out
     struct array_list *al = NULL;
     int i = 5;
-    array_list_set(&al, 98, &i);
+    array_list_set(&al, 0, &i);
+    array_list_set(&al, 31, &i);
+    array_list_set(&al, 32, &i);
+    array_list_set(&al, 63, &i);
+    array_list_set(&al, 64, &i);
+    array_list_set(&al, 127, &i);
+    array_list_set(&al, 128, &i);
 
-    ck_assert(*((int *)array_list_get(&al, 98)) == 5);
+    ck_assert( *((int *)array_list_get(&al, 0)) == 5 );
+    ck_assert( *((int *)array_list_get(&al, 31)) == 5 );
+    ck_assert( *((int *)array_list_get(&al, 32)) == 5 );
+    ck_assert( *((int *)array_list_get(&al, 63)) == 5 );
+    ck_assert( *((int *)array_list_get(&al, 64)) == 5 );
+    ck_assert( *((int *)array_list_get(&al, 127)) == 5 );
+    ck_assert( *((int *)array_list_get(&al, 128)) == 5 );
