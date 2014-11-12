@@ -4,7 +4,7 @@ define \n
 endef
 
 CFLAGS=-g -Wall -std=c11
-LDFLAGS=-L. -lcollect
+LDFLAGS=-L. -lcollect -lm
 
 SOURCES=$(wildcard *.c)
 OBJECTS=$(patsubst %.c, %.o, $(SOURCES))
