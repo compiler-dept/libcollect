@@ -2,6 +2,18 @@
 #include <math.h>
 #include "array_list.h"
 
+/**
+ * @file  array_list.c
+ * @brief Generic Array List
+ */
+
+/**
+ * @brief Calculate the actual chunk from a given index
+ *
+ * \param idx Index of the array list
+ *
+ * \return The actual chunk
+ */
 int chunk(int idx)
 {
     if (idx < pow(2, ARRAY_LIST_INITIAL_CAPACITY_EXPONENT)) {
@@ -11,6 +23,14 @@ int chunk(int idx)
     }
 }
 
+/**
+ * @brief Calculate the number of elements before the actual chunk from a given
+ * index.
+ *
+ * \param idx Index of the array list
+ *
+ * \return The offset in elements
+ */
 int offset(int idx)
 {
     if (idx < pow(2, ARRAY_LIST_INITIAL_CAPACITY_EXPONENT)) {
@@ -20,6 +40,15 @@ int offset(int idx)
     }
 }
 
+/**
+ * @brief Expands the array list to the needed size and finds the chunk
+ * requested by the index
+ *
+ * \param al Pointer to the Pointer of the array list struct
+ * \param idx Index of the array list
+ *
+ * \return Requested chunk
+ */
 struct array_list *expand_list(struct array_list **al, int idx)
 {
     struct array_list *temp = *al;
