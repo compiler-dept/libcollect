@@ -1,0 +1,12 @@
+#include <stdlib.h>
+#include "../tree.h"
+
+#test tree_iteration
+    int payload = 5;
+    struct node *tree = NULL;
+
+    tree = malloc(sizeof(struct node));
+    tree->childc = 0;
+    tree->payload = &payload;
+
+    tree_free(tree, NULL);
