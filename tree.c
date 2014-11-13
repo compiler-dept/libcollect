@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdarg.h>
 #include "tree.h"
 
 struct node *node_next_sibling(struct node *node, struct node *parent)
@@ -12,6 +13,25 @@ struct node *node_next_sibling(struct node *node, struct node *parent)
     }
 
     return NULL;
+}
+
+struct node *tree_create_node(void *payload, int childc, ...)
+{
+    va_list ap;
+
+    struct node *temp = malloc(sizeof(struct node) + sizeof(struct node *) * childc);
+    temp->payload = payload;
+    temp->childc = childc;
+
+    va_start(ap, childc);
+
+    for (int i = 0; i < childc; i++) {
+        temp->childv[i] = va_arg(ap, struct node *);
+    }
+
+    va_end(ap);
+
+    return temp;
 }
 
 struct tree_iterator *tree_iterator_init(struct node * const *tree, enum iterator_type type)

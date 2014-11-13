@@ -20,6 +20,8 @@ struct tree_iterator {
     struct node *current;
 };
 
+struct node *tree_create_node(void *payload, int childc, ...);
+
 struct tree_iterator *tree_iterator_init(struct node * const *tree, enum iterator_type type);
 
 struct node *tree_iterator_next(struct tree_iterator *iterator);
