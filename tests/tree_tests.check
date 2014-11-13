@@ -1,0 +1,20 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include "../tree.h"
+
+#test tree_iteration
+    struct node *tree = NULL;
+
+    tree = malloc(sizeof(struct node) + sizeof(struct node *) * 1);
+    tree->childc = 1;
+    tree->payload = malloc(sizeof(int));
+    *(int *)(tree->payload) = 5;
+
+    tree->childv[0] = malloc(sizeof(struct node));
+    tree->childv[0]->payload = malloc(sizeof(int));
+    *(int *)(tree->childv[0]->payload) = 10;
+    tree->childv[0]->childc = 0;
+
+    tree_free(&tree, free);
+
+    ck_assert(tree == NULL);
