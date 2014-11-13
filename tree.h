@@ -20,10 +20,10 @@ struct tree_iterator {
     struct node *current;
 };
 
-struct tree_iterator *tree_iterator_init(struct node *tree, enum iterator_type type);
+struct tree_iterator *tree_iterator_init(struct node * const *tree, enum iterator_type type);
 
 struct node *tree_iterator_next(struct tree_iterator *iterator);
 
-void tree_free(struct node *tree, void (*payload_free)(void *));
+void tree_free(struct node **tree, void (*payload_free)(void *));
 
 #endif

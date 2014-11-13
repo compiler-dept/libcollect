@@ -14,11 +14,11 @@ struct node *node_next_sibling(struct node *node, struct node *parent)
     return NULL;
 }
 
-struct tree_iterator *tree_iterator_init(struct node *tree, enum iterator_type type)
+struct tree_iterator *tree_iterator_init(struct node * const *tree, enum iterator_type type)
 {
     struct tree_iterator *iterator = malloc(sizeof(struct tree_iterator));
     iterator->type = type;
-    iterator->current = tree;
+    iterator->current = *tree;
     iterator->stack = NULL;
 
     return iterator;
@@ -48,7 +48,7 @@ struct node *tree_iterator_next(struct tree_iterator *iterator)
     return next;
 }
 
-void tree_free(struct node *tree, void (*payload_free)(void *))
+void tree_free(struct node **tree, void (*payload_free)(void *))
 {
     if (!tree) {
         return;
@@ -62,9 +62,9 @@ void tree_free(struct node *tree, void (*payload_free)(void *))
             payload_free(temp->payload);
         }
 
-        free(temp->childv);
         free(temp);
     }
 
+    *tree = NULL;
     free(it);
 }
