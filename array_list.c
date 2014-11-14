@@ -19,7 +19,8 @@ int chunk(int idx)
     if (idx < pow(2, ARRAY_LIST_INITIAL_CAPACITY_EXPONENT)) {
         return 0;
     } else {
-        return floor(log2(idx)) + 1 - ARRAY_LIST_INITIAL_CAPACITY_EXPONENT;
+        return floor(log2(idx)) + 1 -
+               ARRAY_LIST_INITIAL_CAPACITY_EXPONENT;
     }
 }
 
@@ -58,20 +59,28 @@ struct array_list *expand_list(struct array_list **al, int idx)
     do {
         if (temp == NULL) {
             arc = pow(2, ARRAY_LIST_INITIAL_CAPACITY_EXPONENT);
-            temp = malloc(sizeof(struct array_list) + sizeof(void *) * arc);
+            temp =
+                malloc(sizeof(struct array_list) +
+                       sizeof(void *) * arc);
             temp->next = NULL;
             temp->arc = arc;
             *al = temp;
         } else if (temp->next == NULL) {
-            arc = pow(2, ARRAY_LIST_INITIAL_CAPACITY_EXPONENT + (i == 0 ? 0 : i));
-            temp->next = malloc(sizeof(struct array_list) + sizeof(void *) * arc);
+            arc =
+                pow(2,
+                    ARRAY_LIST_INITIAL_CAPACITY_EXPONENT + (i ==
+                            0 ? 0 :
+                            i));
+            temp->next =
+                malloc(sizeof(struct array_list) +
+                       sizeof(void *) * arc);
             temp->next->next = NULL;
             temp->next->arc = arc;
             temp = temp->next;
         } else {
             temp = temp->next;
         }
-    } while(++i < chunk(idx));
+    } while (++i < chunk(idx));
 
     return temp;
 }
@@ -93,7 +102,7 @@ void array_list_set(struct array_list **al, int idx, void *elem)
     }
 }
 
-void *array_list_get(struct array_list **al, int idx)
+void *array_list_get(struct array_list *const *al, int idx)
 {
     struct array_list *temp = *al;
 
@@ -106,4 +115,48 @@ void *array_list_get(struct array_list **al, int idx)
     }
 
     return temp->arv[idx - offset(idx)];
+}
+
+struct array_list_iterator *array_list_iterator_init(struct array_list *const
+        *al)
+{
+    struct array_list_iterator *it =
+        malloc(sizeof(struct array_list_iterator));
+    it->current_chunk = *al;
+    it->current = 0;
+    return it;
+}
+
+void *array_list_iterator_next(struct array_list_iterator *it)
+{
+    void *elem = NULL;
+
+    if (it->current_chunk) {
+        elem = it->current_chunk->arv[it->current];
+    }
+
+    if (it->current < it->current_chunk->arc - 1) {
+        it->current++;
+    } else {
+        it->current = 0;
+        it->current_chunk = it->current_chunk->next;
+    }
+
+    return elem;
+}
+
+void array_list_free(struct array_list **al, void (*elem_free)(void *))
+{
+    struct array_list *next = NULL;
+    for (struct array_list * temp = *al; temp; temp = next) {
+        for (int i = 0; i<temp->arc; i++) {
+            if (elem_free) {
+                elem_free(temp->arv[i]);
+            }
+        }
+        next = temp->next;
+        free(temp);
+    }
+
+    *al = NULL;
 }

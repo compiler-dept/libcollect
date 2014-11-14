@@ -20,6 +20,14 @@ struct array_list {
 };
 
 /**
+ * @brief Array list iterator structure
+ */
+struct array_list_iterator {
+    struct array_list *current_chunk;
+    int current;
+};
+
+/**
  * @brief Insert value into array list.
  *
  * If *al is NULL, allocate new array list and expand it to the right size.
@@ -42,6 +50,14 @@ void array_list_set(struct array_list **al, int idx, void *elem);
  *
  * \return Pointer to the payload/value
  */
-void *array_list_get(struct array_list **al, int idx);
+void *array_list_get(struct array_list * const *al, int idx);
+
+/**
+ * @brief
+ */
+struct array_list_iterator *array_list_iterator_init(struct array_list * const *al);
+void *array_list_iterator_next(struct array_list_iterator *it);
+void array_list_free(struct array_list **al, void (*elem_free)(void *));
+
 
 #endif
