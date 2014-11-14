@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "../array_list.h"
 
 #test array_list_in_out
@@ -19,3 +21,23 @@
     ck_assert( *((int *)array_list_get(&al, 64)) == 5 );
     ck_assert( *((int *)array_list_get(&al, 127)) == 5 );
     ck_assert( *((int *)array_list_get(&al, 128)) == 5 );
+
+#test array_list_iterator_test
+    struct array_list *al = NULL;
+    char buf[8];
+    for (int i = 0; i < 100; i++){
+        sprintf(buf, "val%i", i);
+        array_list_set(&al, i, strdup(buf));
+    }
+
+    struct array_list_iterator *it = array_list_iterator_init(&al);
+
+    char *temp = NULL;
+    for (int i = 0; i < 100; i++){
+        sprintf(buf, "val%i", i);
+        temp = array_list_iterator_next(it);
+        ck_assert(strcmp(buf, temp) == 0);
+    }
+
+    array_list_free(&al, free);
+    ck_assert(al == NULL);

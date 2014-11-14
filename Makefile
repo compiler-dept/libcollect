@@ -4,7 +4,7 @@ define \n
 endef
 
 CC=gcc
-CFLAGS=-g -Wall -std=c11
+CFLAGS=-g -Wall -std=gnu11
 LDFLAGS=-L. -lcollect -lm
 
 SOURCES=$(wildcard *.c)

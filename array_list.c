@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <math.h>
+#include <string.h>
 #include "array_list.h"
 
 /**
@@ -62,6 +63,7 @@ struct array_list *expand_list(struct array_list **al, int idx)
             temp =
                 malloc(sizeof(struct array_list) +
                        sizeof(void *) * arc);
+            memcpy(temp->next->arv, 0, arc * sizeof(void *));
             temp->next = NULL;
             temp->arc = arc;
             *al = temp;
@@ -74,6 +76,7 @@ struct array_list *expand_list(struct array_list **al, int idx)
             temp->next =
                 malloc(sizeof(struct array_list) +
                        sizeof(void *) * arc);
+            memcpy(temp->next->arv, 0, arc * sizeof(void *));
             temp->next->next = NULL;
             temp->next->arc = arc;
             temp = temp->next;
@@ -150,7 +153,7 @@ void array_list_free(struct array_list **al, void (*elem_free)(void *))
     struct array_list *next = NULL;
     for (struct array_list * temp = *al; temp; temp = next) {
         for (int i = 0; i<temp->arc; i++) {
-            if (elem_free) {
+            if (elem_free && temp->arv[i]) {
                 elem_free(temp->arv[i]);
             }
         }
