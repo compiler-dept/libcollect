@@ -3,6 +3,7 @@ define \n
 
 endef
 
+CC=gcc
 CFLAGS=-g -Wall -std=c11
 LDFLAGS=-L. -lcollect -lm
 
