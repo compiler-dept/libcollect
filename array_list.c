@@ -1,6 +1,5 @@
 #include <stdlib.h>
 #include <math.h>
-#include <string.h>
 #include "array_list.h"
 
 /**
@@ -63,9 +62,13 @@ struct array_list *expand_list(struct array_list **al, int idx)
             temp =
                 malloc(sizeof(struct array_list) +
                        sizeof(void *) * arc);
-            memcpy(temp->next->arv, 0, arc * sizeof(void *));
             temp->next = NULL;
             temp->arc = arc;
+
+            for (int j = 0; j < temp->arc; j++) {
+                temp->arv[j] = NULL;
+            }
+
             *al = temp;
         } else if (temp->next == NULL) {
             arc =
@@ -76,9 +79,13 @@ struct array_list *expand_list(struct array_list **al, int idx)
             temp->next =
                 malloc(sizeof(struct array_list) +
                        sizeof(void *) * arc);
-            memcpy(temp->next->arv, 0, arc * sizeof(void *));
             temp->next->next = NULL;
             temp->next->arc = arc;
+
+            for (int j = 0; j < temp->next->arc; j++) {
+                temp->next->arv[j] = NULL;
+            }
+
             temp = temp->next;
         } else {
             temp = temp->next;
