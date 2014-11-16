@@ -11,7 +11,7 @@
 #endif
 
 /**
- * @brief Array list chunk struct
+ * @brief Array list chunk structure
  */
 struct array_list {
     struct array_list *next; ///< Pointer to the next chunk
@@ -23,8 +23,8 @@ struct array_list {
  * @brief Array list iterator structure
  */
 struct array_list_iterator {
-    struct array_list *current_chunk;
-    int current;
+    struct array_list *current_chunk; ///< Pointer to the current chunk
+    int current;                      ///< Index of current element in chunk
 };
 
 /**
@@ -53,11 +53,31 @@ void array_list_set(struct array_list **al, int idx, void *elem);
 void *array_list_get(struct array_list * const *al, int idx);
 
 /**
- * @brief
+ * @brief Initialize a new array list iterator.
+ *
+ * \param al Pointer to the pointer of the array list struct
+ *
+ * \return Pointer to the initialized array list iterator
  */
 struct array_list_iterator *array_list_iterator_init(struct array_list * const *al);
-void *array_list_iterator_next(struct array_list_iterator *it);
-void array_list_free(struct array_list **al, void (*elem_free)(void *));
 
+/**
+ * @brief Get the next array list element from iterator.
+ *
+ * \param it Pointer to the array list iterator struct
+ *
+ * \return Pointer to the element
+ */
+void *array_list_iterator_next(struct array_list_iterator *it);
+
+/**
+ * @brief Frees an array list.
+ *
+ * \param al Pointer to the pointer of the array list struct
+ * \param elem_free Pointer to a function that frees the payload element
+ *
+ * \return Nothing
+ */
+void array_list_free(struct array_list **al, void (*elem_free)(void *));
 
 #endif

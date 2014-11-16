@@ -3,11 +3,6 @@
 #include "array_list.h"
 
 /**
- * @file  array_list.c
- * @brief Generic Array List
- */
-
-/**
  * @brief Calculate the actual chunk from a given index
  *
  * \param idx Index of the array list

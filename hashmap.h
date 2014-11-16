@@ -1,8 +1,3 @@
-/**
- * @file  hashmap.h
- * @brief Generic Hashmap
- */
-
 #ifndef HASHMAP_H
 #define HASHMAP_H
 
@@ -15,7 +10,12 @@
 #include <string.h>
 
 /**
- * @brief hashmap entry struct
+ * @file  hashmap.h
+ * @brief Generic Hashmap
+ */
+
+/**
+ * @brief hashmap entry structure
  */
 struct hashmap_entry {
     char *key;   ///< entry search key
@@ -23,7 +23,7 @@ struct hashmap_entry {
 };
 
 /**
- * @brief main hashmap struct
+ * @brief main hashmap structure
  */
 struct hashmap {
     int capacity;                 ///< actual max capacity of hashmap
