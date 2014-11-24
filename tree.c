@@ -34,8 +34,7 @@ struct node *tree_create_node(void *payload, int childc, ...)
     return temp;
 }
 
-struct tree_iterator *tree_iterator_init(struct node * const *tree, enum iterator_type type)
-{
+struct tree_iterator *tree_iterator_init(struct node * const *tree, enum iterator_type type) {
     struct tree_iterator *iterator = malloc(sizeof(struct tree_iterator));
     iterator->type = type;
     iterator->current = *tree;
