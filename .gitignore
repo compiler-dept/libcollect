@@ -34,6 +34,7 @@ tests/*_tests
 # Documentation
 docs/html
 docs/latex
+docs/man
 
 # Misc
 *.orig

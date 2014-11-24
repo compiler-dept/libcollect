@@ -1,13 +1,13 @@
+#ifndef STACK_H
+#define STACK_H
+
 /**
  * @file  stack.h
  * @brief Generic Stack
  */
 
-#ifndef STACK_H
-#define STACK_H
-
 /**
- * @brief stack element struct
+ * @brief stack element structure
  */
 struct stack {
     void *head;         ///< pointer to payload
