@@ -67,6 +67,11 @@ struct node *tree_iterator_next(struct tree_iterator *iterator)
     return next;
 }
 
+void tree_iterator_free(struct tree_iterator *iterator){
+    stack_free(&iterator->stack);
+    free(iterator);
+}
+
 void tree_free(struct node **tree, void (*payload_free)(void *))
 {
     if (!tree) {
@@ -85,5 +90,5 @@ void tree_free(struct node **tree, void (*payload_free)(void *))
     }
 
     *tree = NULL;
-    free(it);
+    tree_iterator_free(it);
 }

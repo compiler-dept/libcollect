@@ -65,6 +65,14 @@ struct tree_iterator *tree_iterator_init(struct node * const *tree, enum iterato
 struct node *tree_iterator_next(struct tree_iterator *iterator);
 
 /**
+ * @brief Free iterator  
+ *
+ * \param iterator pointer to iterator
+ *
+ */
+void tree_iterator_free(struct tree_iterator *iterator);
+
+/**
  * @brief Frees a tree
  *
  * \param tree pointer to the pointer of the tree
