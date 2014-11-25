@@ -3,7 +3,8 @@
 #include <string.h>
 #include "../array_list.h"
 
-#test array_list_in_out
+void test_array_list_in_out(void)
+{
     struct array_list *al = NULL;
     int i = 5;
     array_list_set(&al, 0, &i);
@@ -14,15 +15,17 @@
     array_list_set(&al, 127, &i);
     array_list_set(&al, 128, &i);
 
-    ck_assert( *((int *)array_list_get(&al, 0)) == 5 );
-    ck_assert( *((int *)array_list_get(&al, 31)) == 5 );
-    ck_assert( *((int *)array_list_get(&al, 32)) == 5 );
-    ck_assert( *((int *)array_list_get(&al, 63)) == 5 );
-    ck_assert( *((int *)array_list_get(&al, 64)) == 5 );
-    ck_assert( *((int *)array_list_get(&al, 127)) == 5 );
-    ck_assert( *((int *)array_list_get(&al, 128)) == 5 );
+    CU_ASSERT( *((int *)array_list_get(&al, 0)) == 5 );
+    CU_ASSERT( *((int *)array_list_get(&al, 31)) == 5 );
+    CU_ASSERT( *((int *)array_list_get(&al, 32)) == 5 );
+    CU_ASSERT( *((int *)array_list_get(&al, 63)) == 5 );
+    CU_ASSERT( *((int *)array_list_get(&al, 64)) == 5 );
+    CU_ASSERT( *((int *)array_list_get(&al, 127)) == 5 );
+    CU_ASSERT( *((int *)array_list_get(&al, 128)) == 5 );
+}
 
-#test array_list_iterator_test
+void test_array_list_iterator_test(void)
+{
     struct array_list *al = NULL;
     char buf[8];
     for (int i = 0; i < 100; i++){
@@ -36,8 +39,9 @@
     for (int i = 0; i < 100; i++){
         sprintf(buf, "val%i", i);
         temp = array_list_iterator_next(it);
-        ck_assert(strcmp(buf, temp) == 0);
+        CU_ASSERT(strcmp(buf, temp) == 0);
     }
 
     array_list_free(&al, free);
-    ck_assert(al == NULL);
+    CU_ASSERT(al == NULL);
+}

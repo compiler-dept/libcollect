@@ -2,7 +2,8 @@
 #include <stdio.h>
 #include "../tree.h"
 
-#test tree_iteration
+void test_tree_iteration(void)
+{
     struct node *tree = NULL;
 
     tree = malloc(sizeof(struct node) + sizeof(struct node *) * 1);
@@ -17,9 +18,11 @@
 
     tree_free(&tree, free);
 
-    ck_assert(tree == NULL);
+    CU_ASSERT(tree == NULL);
+}
 
-#test tree_create
+void test_tree_create(void)
+{
     int *payload1 = malloc(sizeof(int));
     *payload1 = 5;
     int *payload2 = malloc(sizeof(int));
@@ -28,12 +31,13 @@
     *payload3 = 15;
 
     struct node *tree = tree_create_node(
-        payload1,
-        2,
-        tree_create_node(payload2, 0),
-        tree_create_node(payload3, 0)
+    payload1,
+    2,
+    tree_create_node(payload2, 0),
+    tree_create_node(payload3, 0)
     );
 
     tree_free(&tree, free);
 
-    ck_assert(tree == NULL);
+    CU_ASSERT(tree == NULL);
+}
