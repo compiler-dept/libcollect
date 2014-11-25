@@ -29,7 +29,7 @@
 *.hex
 
 # Tests
-tests/*_tests
+tests/testsuite
 
 # Documentation
 docs/html
