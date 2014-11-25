@@ -1,5 +1,5 @@
-CFLAGS=-g -Wall -std=gnu11
-LDFLAGS=-L. -lcollect -lm
+override CFLAGS+=-g -Wall -std=gnu99
+override LDFLAGS+=-L. -lcollect -lm
 
 SOURCES=$(wildcard *.c)
 OBJECTS=$(patsubst %.c, %.o, $(SOURCES))
@@ -15,7 +15,7 @@ test: tests/testsuite
 	tests/testsuite
 
 tests/testsuite: tests/testsuite.c libcollect.a
-	$(CC) `pkg-config --cflags cunit` $< `pkg-config --libs cunit` $(LDFLAGS) -o $@
+	$(CC) $(CFLAGS) $< $(LDFLAGS) -lcunit -o $@
 
 docs:
 	doxygen docs/Doxyfile
