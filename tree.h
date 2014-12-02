@@ -49,7 +49,7 @@ struct node *tree_create_node(void *payload, int childc, ...);
  * @brief Initializes a new tree iterator.
  *
  * \param tree pointer to the tree
- * \param type type of iterator
+ * \param type type of iterator. Either PREORDER or POSTORDER
  *
  * \return new iterator
  */
@@ -60,7 +60,7 @@ struct tree_iterator *tree_iterator_init(struct node * const *tree, enum iterato
  *
  * \param iterator pointer to iterator
  *
- * \return next node from tree
+ * \return next node from tree, depends on type of iterator
  */
 struct node *tree_iterator_next(struct tree_iterator *iterator);
 
