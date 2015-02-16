@@ -29,12 +29,11 @@
 *.hex
 
 # Tests
-tests/*_tests
+tests/.clarcache
+tests/clar.suite
+tests/testsuite
 
 # Documentation
 docs/html
 docs/latex
 docs/man
-
-# Misc
-*.orig

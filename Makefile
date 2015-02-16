@@ -1,43 +1,32 @@
-define \n
+LIB=libcollect.a
 
-
-endef
-
-CC=gcc
 CFLAGS=-g -Wall -std=gnu99
-LDFLAGS=-L. -lcollect -lm
 
 SOURCES=$(wildcard *.c)
 OBJECTS=$(patsubst %.c, %.o, $(SOURCES))
 
-TEST_SOURCES=$(wildcard tests/*_tests.check)
-TEST_OBJECTS=$(patsubst %.check, %.o, $(TEST_SOURCES)) \
-	$(patsubst %.check, %.c, $(TEST_SOURCES))
-TESTS=$(patsubst %.check, %, $(TEST_SOURCES))
+.PHONY: all test valgrind docsm clean
 
-.PHONY: all test indent clean docs
+all: $(LIB)
 
-all: libcollect.a
-
-libcollect.a: $(OBJECTS)
+$(LIB): $(OBJECTS)
 	ar -rcs $@ $^
 
-test: $(TESTS)
-	$(foreach x, $^, ./$(x)${\n})
+TEST_SOURCES=$(wildcard tests/*.c)
+tests/testsuite: $(LIB)
+	tests/generate.py tests
+	$(CC) $(CFLAGS) -I. -L. -Wno-unused-function -o $@ $(TEST_SOURCES) -lcollect
 
-tests/%_tests.c: tests/%_tests.check
-	checkmk $< > $@
+test: tests/testsuite
+	tests/testsuite
 
-tests/%_tests: tests/%_tests.c libcollect.a
-	$(CC) $(CFLAGS) `pkg-config --cflags --libs check` -o $@ $< $(LDFLAGS)
+valgrind: tests/testsuite
+	valgrind --leak-check=full --error-exitcode=1 --suppressions=tests/valgrind.supp tests/testsuite
 
 docs:
 	doxygen docs/Doxyfile
 
-indent:
-	find . \( -iname "*.c" -o -iname "*.h" \) -exec astyle --style=linux {} \;
-
 clean:
-	rm -f libcollect.a $(OBJECTS) $(TEST_OBJECTS) $(TESTS)
+	rm -f libcollect.a $(OBJECTS)
+	rm -f tests/testsuite tests/.clarcache tests/clar.suite
 	rm -rf docs/html docs/latex
-	rm -f *.orig

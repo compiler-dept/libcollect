@@ -1,8 +1,9 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include "clar.h"
+
 #include "../stack.h"
 
-#test push_pop_equality
+void test_stack__push_pop_equality(void)
+{
     int values[] = {0,1,2,3,4,5,6,7,8,9};
     struct stack *stack = NULL;
 
@@ -10,22 +11,27 @@
         stack_push(&stack, values + i);
     }
 
-    ck_assert(stack != NULL);
+    cl_assert(stack != NULL);
 
     for (int i = 9; i > 2; i--) {
         int *val = (int *)stack_pop(&stack);
-        ck_assert(val == values + i);
+        cl_assert(val == values + i);
     }
 
     stack_free(&stack);
+}
 
-#test free_empty_stack
+void test_stack__free_empty_stack(void)
+{
     struct stack *stack = NULL;
     stack_free(&stack);
 
-    ck_assert(stack == NULL);
+    cl_assert(stack == NULL);
+}
 
-#test pop_from_empty_stack
+void test_stack__pop_from_empty_stack(void)
+{
     struct stack *stack = NULL;
 
-    ck_assert(stack_pop(&stack) == NULL);
+    cl_assert(stack_pop(&stack) == NULL);
+}
