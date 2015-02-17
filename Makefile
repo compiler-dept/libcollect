@@ -15,7 +15,7 @@ $(LIB): $(OBJECTS)
 TEST_SOURCES=$(wildcard tests/*.c)
 tests/testsuite: $(LIB)
 	tests/generate.py tests
-	$(CC) $(CFLAGS) -I. -L. -Wno-unused-function -o $@ $(TEST_SOURCES) -lcollect
+	$(CC) $(CFLAGS) -I. -L. -Wno-unused-function -o $@ $(TEST_SOURCES) -lcollect -lm
 
 test: tests/testsuite
 	tests/testsuite
