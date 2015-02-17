@@ -123,20 +123,22 @@ void test_tree_create(void)
     int *payload3 = malloc(sizeof(int));
     *payload3 = 15;
 
-    struct node *tree = tree_create_node(
-        payload1,
-        #ifdef TREE_PARENT_POINTERS
-            NULL,
-        #endif
-        2,
-        #ifndef TREE_PARENT_POINTERS
+    #ifndef TREE_PARENT_POINTERS
+        struct node *tree = tree_create_node(
+            payload1,
+            2,
             tree_create_node(payload2, 0),
             tree_create_node(payload3, 0)
-        #else
+        );
+    #else
+        struct node *tree = tree_create_node(
+            payload1,
+            NULL,
+            2,
             tree_create_node(payload2, NULL, 0),
             tree_create_node(payload3, NULL, 0)
-        #endif
-    );
+        );
+    #endif
 
     tree_free(&tree, free);
 
