@@ -13,6 +13,9 @@
  */
 struct node {
     void *payload;         ///< pointer to payload
+    #ifdef TREE_PARENT_POINTERS
+    struct node *parent;
+    #endif
     int childc;            ///< number of child nodes
     struct node *childv[]; ///< array of pointers to child nodes
 };
@@ -43,7 +46,11 @@ struct tree_iterator {
  *
  * \return new tree node
  */
-struct node *tree_create_node(void *payload, int childc, ...);
+#ifdef TREE_PARENT_POINTERS
+    struct node *tree_create_node(void *payload, struct node *parent, int childc, ...);
+#else
+    struct node *tree_create_node(void *payload, int childc, ...);
+#endif
 
 /**
  * @brief Initializes a new tree iterator.
