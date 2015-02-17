@@ -7,3 +7,5 @@ before_install:
   - sudo apt-get install -qq git valgrind
 script:
   - make test
+  - make clean
+  - CFLAGS=-DTREE_PARENT_POINTERS make test
