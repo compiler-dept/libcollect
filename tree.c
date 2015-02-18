@@ -15,11 +15,7 @@ struct node *node_next_sibling(struct node *node, struct node *parent)
 	return NULL;
 }
 
-#ifdef TREE_PARENT_POINTERS
-    struct node *tree_create_node(void *payload, struct node *parent, int childc, ...)
-#else
-    struct node *tree_create_node(void *payload, int childc, ...)
-#endif
+struct node *tree_create_node(void *payload, int childc, ...)
 {
 	va_list ap;
 
@@ -27,16 +23,15 @@ struct node *node_next_sibling(struct node *node, struct node *parent)
 	    malloc(sizeof(struct node) + sizeof(struct node *) * childc);
 	temp->payload = payload;
 
-    #ifdef TREE_PARENT_POINTERS
-        temp->parent = parent;
-    #endif
-
 	temp->childc = childc;
 
 	va_start(ap, childc);
 
 	for (int i = 0; i < childc; i++) {
 		temp->childv[i] = va_arg(ap, struct node *);
+        #ifdef TREE_PARENT_POINTERS
+            temp->childv[i]->parent = temp;
+        #endif
 	}
 
 	va_end(ap);

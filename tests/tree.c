@@ -9,32 +9,17 @@ void test_tree__iterator_preorder(void)
 
     // construct tree with preorder: 0,1,2,3,4,5
 
-    #ifndef TREE_PARENT_POINTERS
-        // leaf nodes
-        struct node *b = tree_create_node(values + 2, 0);
-        struct node *d = tree_create_node(values + 4, 0);
-        struct node *e = tree_create_node(values + 5, 0);
+    // leaf nodes
+    struct node *b = tree_create_node(values + 2, 0);
+    struct node *d = tree_create_node(values + 4, 0);
+    struct node *e = tree_create_node(values + 5, 0);
 
-        // inner nodes
-        struct node *a = tree_create_node(values + 1, 1, b);
-        struct node *c = tree_create_node(values + 3, 2, d, e);
+    // inner nodes
+    struct node *a = tree_create_node(values + 1, 1, b);
+    struct node *c = tree_create_node(values + 3, 2, d, e);
 
-        // root node
-        struct node *root = tree_create_node(values, 2, a, c);
-    #else
-        // leaf nodes
-        struct node *b = tree_create_node(values + 2, NULL, 0);
-        struct node *d = tree_create_node(values + 4, NULL, 0);
-        struct node *e = tree_create_node(values + 5, NULL, 0);
-
-        // inner nodes
-        struct node *a = tree_create_node(values + 1, NULL, 1, b);
-        struct node *c = tree_create_node(values + 3, NULL, 2, d, e);
-
-        // root node
-        struct node *root = tree_create_node(values, NULL, 2, a, c);
-
-    #endif
+    // root node
+    struct node *root = tree_create_node(values, 2, a, c);
 
     struct tree_iterator *it = tree_iterator_init(&root, PREORDER);
 
@@ -56,30 +41,16 @@ void test_tree__iterator_postorder(void)
 
     // construct tree with postorder: 0,1,2,3,4,5
 
-    #ifndef TREE_PARENT_POINTERS
-        // leaf nodes
-        struct node *b = tree_create_node(values, 0);
-        struct node *d = tree_create_node(values + 2, 0);
-        struct node *e = tree_create_node(values + 3, 0);
-        // inner nodes
-        struct node *a = tree_create_node(values + 1, 1, b);
-        struct node *c = tree_create_node(values + 4, 2, d, e);
+    // leaf nodes
+    struct node *b = tree_create_node(values, 0);
+    struct node *d = tree_create_node(values + 2, 0);
+    struct node *e = tree_create_node(values + 3, 0);
+    // inner nodes
+    struct node *a = tree_create_node(values + 1, 1, b);
+    struct node *c = tree_create_node(values + 4, 2, d, e);
 
-        // root node
-        struct node *root = tree_create_node(values + 5, 2, a, c);
-    #else
-        // leaf nodes
-        struct node *b = tree_create_node(values, NULL, 0);
-        struct node *d = tree_create_node(values + 2, NULL + 2, 0);
-        struct node *e = tree_create_node(values + 3, NULL, 0);
-        // inner nodes
-        struct node *a = tree_create_node(values + 1, NULL, 1, b);
-        struct node *c = tree_create_node(values + 4, NULL, 2, d, e);
-
-        // root node
-        struct node *root = tree_create_node(values + 5, NULL, 2, a, c);
-    #endif
-
+    // root node
+    struct node *root = tree_create_node(values + 5, 2, a, c);
 
     struct tree_iterator *it = tree_iterator_init(&root, POSTORDER);
 
@@ -123,22 +94,12 @@ void test_tree_create(void)
     int *payload3 = malloc(sizeof(int));
     *payload3 = 15;
 
-    #ifndef TREE_PARENT_POINTERS
-        struct node *tree = tree_create_node(
-            payload1,
-            2,
-            tree_create_node(payload2, 0),
-            tree_create_node(payload3, 0)
-        );
-    #else
-        struct node *tree = tree_create_node(
-            payload1,
-            NULL,
-            2,
-            tree_create_node(payload2, NULL, 0),
-            tree_create_node(payload3, NULL, 0)
-        );
-    #endif
+    struct node *tree = tree_create_node(
+        payload1,
+        2,
+        tree_create_node(payload2, 0),
+        tree_create_node(payload3, 0)
+    );
 
     tree_free(&tree, free);
 
