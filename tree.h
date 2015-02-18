@@ -13,9 +13,7 @@
  */
 struct node {
     void *payload;         ///< pointer to payload
-#ifdef TREE_PARENT_POINTERS
-    struct node *parent;
-#endif
+    struct node *parent;   ///< pointer to parent node
     int childc;            ///< number of child nodes
     struct node *childv[]; ///< array of pointers to child nodes
 };

@@ -22,20 +22,14 @@ struct node *tree_create_node(void *payload, int childc, ...)
 	struct node *temp =
 	    malloc(sizeof(struct node) + sizeof(struct node *) * childc);
 	temp->payload = payload;
-
-#ifdef TREE_PARENT_POINTERS
     temp->parent = NULL;
-#endif
-
 	temp->childc = childc;
 
 	va_start(ap, childc);
 
 	for (int i = 0; i < childc; i++) {
 		temp->childv[i] = va_arg(ap, struct node *);
-#ifdef TREE_PARENT_POINTERS
         temp->childv[i]->parent = temp;
-#endif
 	}
 
 	va_end(ap);
