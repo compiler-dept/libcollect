@@ -6,6 +6,6 @@ before_install:
   - sudo apt-get update -qq
   - sudo apt-get install -qq git valgrind
 script:
-  - make test
+  - make test && make valgrind
   - make clean
-  - CFLAGS=-DTREE_PARENT_POINTERS make test
+  - CFLAGS=-DTREE_PARENT_POINTERS make test && make valgrind

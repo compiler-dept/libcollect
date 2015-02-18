@@ -24,6 +24,8 @@ void test_array_list__in_out(void)
     cl_assert( *((int *)array_list_get(&al, 64)) == 5 );
     cl_assert( *((int *)array_list_get(&al, 127)) == 5 );
     cl_assert( *((int *)array_list_get(&al, 128)) == 5 );
+
+    array_list_free(&al, NULL);
 }
 
 void test_array_list__iterator_test(void)
@@ -44,6 +46,8 @@ void test_array_list__iterator_test(void)
         cl_assert(strcmp(buf, temp) == 0);
     }
 
+    free(it);
+    it = NULL;
     array_list_free(&al, free);
     cl_assert(al == NULL);
 }
