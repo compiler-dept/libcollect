@@ -13,9 +13,9 @@
  */
 struct node {
     void *payload;         ///< pointer to payload
-    #ifdef TREE_PARENT_POINTERS
+#ifdef TREE_PARENT_POINTERS
     struct node *parent;
-    #endif
+#endif
     int childc;            ///< number of child nodes
     struct node *childv[]; ///< array of pointers to child nodes
 };
@@ -68,7 +68,7 @@ struct tree_iterator *tree_iterator_init(struct node * const *tree, enum iterato
 struct node *tree_iterator_next(struct tree_iterator *iterator);
 
 /**
- * @brief Free iterator  
+ * @brief Free iterator
  *
  * \param iterator pointer to iterator
  *
