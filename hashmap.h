@@ -37,7 +37,7 @@ struct hashmap {
  * Uses free.
  * \param table pointer to hashmap struct
  */
-void hashmap_free(struct hashmap *table);
+void hashmap_free(struct hashmap *table, void (*value_free) (void *ptr));
 
 /**
  * @brief Insert value into hash table. If *table is NULL, allocate new hashmap.
