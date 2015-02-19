@@ -5,7 +5,7 @@ CFLAGS+=-g -Wall -std=gnu99
 SOURCES=$(wildcard *.c)
 OBJECTS=$(patsubst %.c, %.o, $(SOURCES))
 
-.PHONY: all test valgrind docsm clean
+.PHONY: all test valgrind docs clean
 
 all: $(LIB)
 
