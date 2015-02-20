@@ -42,7 +42,8 @@ void *stack_pop(struct stack **stack);
  * @brief free a stack
  *
  * \param stack pointer to the pointer of the stack struct
+ * \param pointer to custom payload free function
  */
-void stack_free(struct stack **stack);
+void stack_free(struct stack **stack, void (*payload_free) (void *));
 
 #endif /* STACK_H */

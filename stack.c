@@ -31,13 +31,16 @@ void *stack_pop(struct stack **stack)
     }
 }
 
-void stack_free(struct stack **stack)
+void stack_free(struct stack **stack, void (*payload_free) (void *))
 {
     if (*stack) {
         if ((*stack)->tail) {
-            stack_free(&((*stack)->tail));
+            stack_free(&((*stack)->tail), payload_free);
         }
 
+        if (payload_free) {
+            payload_free((*stack)->head);
+        }
         free(*stack);
         *stack = NULL;
     }

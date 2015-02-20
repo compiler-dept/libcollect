@@ -105,7 +105,7 @@ struct node *tree_iterator_next(struct tree_iterator *iterator)
 
 void tree_iterator_free(struct tree_iterator *iterator)
 {
-	stack_free(&iterator->stack);
+	stack_free(&iterator->stack, NULL);
 	free(iterator);
 }
 

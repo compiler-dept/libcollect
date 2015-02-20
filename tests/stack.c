@@ -18,13 +18,13 @@ void test_stack__push_pop_equality(void)
         cl_assert(val == values + i);
     }
 
-    stack_free(&stack);
+    stack_free(&stack, NULL);
 }
 
 void test_stack__free_empty_stack(void)
 {
     struct stack *stack = NULL;
-    stack_free(&stack);
+    stack_free(&stack, NULL);
 
     cl_assert(stack == NULL);
 }
