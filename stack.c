@@ -3,10 +3,12 @@
 
 void stack_push(struct stack **stack, void *elem)
 {
-    struct stack *newhead = malloc(sizeof(struct stack));
-    newhead->head = elem;
-    newhead->tail = *stack;
-    *stack = newhead;
+    if (elem) {
+        struct stack *newhead = malloc(sizeof(struct stack));
+        newhead->head = elem;
+        newhead->tail = *stack;
+        *stack = newhead;
+    }
 }
 
 void *stack_peek(struct stack *stack)
