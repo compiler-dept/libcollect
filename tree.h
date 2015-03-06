@@ -54,7 +54,7 @@ struct node *tree_create_node(void *payload, int childc, ...);
  *
  * \return new iterator
  */
-struct tree_iterator *tree_iterator_init(struct node * const *tree, enum iterator_type type);
+struct tree_iterator *tree_iterator_init(struct node *const *tree, enum iterator_type type);
 
 /**
  * @brief Next node from tree iterator

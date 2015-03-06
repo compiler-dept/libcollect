@@ -153,8 +153,8 @@ void *array_list_iterator_next(struct array_list_iterator *it)
 void array_list_free(struct array_list **al, void (*elem_free)(void *))
 {
     struct array_list *next = NULL;
-    for (struct array_list * temp = *al; temp; temp = next) {
-        for (int i = 0; i<temp->arc; i++) {
+    for (struct array_list *temp = *al; temp; temp = next) {
+        for (int i = 0; i < temp->arc; i++) {
             if (elem_free && temp->arv[i]) {
                 elem_free(temp->arv[i]);
             }

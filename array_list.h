@@ -50,7 +50,7 @@ void array_list_set(struct array_list **al, int idx, void *elem);
  *
  * \return Pointer to the payload/value
  */
-void *array_list_get(struct array_list * const *al, int idx);
+void *array_list_get(struct array_list *const *al, int idx);
 
 /**
  * @brief Initialize a new array list iterator.
@@ -59,7 +59,7 @@ void *array_list_get(struct array_list * const *al, int idx);
  *
  * \return Pointer to the initialized array list iterator
  */
-struct array_list_iterator *array_list_iterator_init(struct array_list * const *al);
+struct array_list_iterator *array_list_iterator_init(struct array_list *const *al);
 
 /**
  * @brief Get the next array list element from iterator.

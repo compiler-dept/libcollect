@@ -5,7 +5,7 @@ CFLAGS+=-g -Wall -std=gnu99
 SOURCES=$(wildcard *.c)
 OBJECTS=$(patsubst %.c, %.o, $(SOURCES))
 
-.PHONY: all test valgrind docs clean
+.PHONY: all test valgrind docs clean style
 
 all: $(LIB)
 
@@ -30,3 +30,6 @@ clean:
 	rm -f libcollect.a $(OBJECTS)
 	rm -f tests/testsuite tests/.clarcache tests/clar.suite
 	rm -rf docs/html docs/latex
+
+style:
+	astyle -A3s4SpHk3jn "*.c" "*.h"
