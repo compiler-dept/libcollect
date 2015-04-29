@@ -38,7 +38,7 @@ struct node *tree_create_node(void *payload, int childc, ...)
     return temp;
 }
 
-void tree_append_node(struct node **node, struct node *child)
+struct node *tree_append_node(struct node **node, struct node *child)
 {
     struct node *temp = malloc(sizeof(struct node) + ((*node)->childc + 1) * sizeof(struct node *));
     temp->payload = (*node)->payload;
@@ -50,7 +50,9 @@ void tree_append_node(struct node **node, struct node *child)
     }
 
     free(*node);
-    *node = temp;
+    *node = NULL;
+
+    return temp;
 }
 
 struct tree_iterator *tree_iterator_init(struct node *const *tree,
