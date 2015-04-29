@@ -46,6 +46,8 @@ struct tree_iterator {
  */
 struct node *tree_create_node(void *payload, int childc, ...);
 
+void tree_append_node(struct node **node, struct node *child);
+
 /**
  * @brief Initializes a new tree iterator.
  *
