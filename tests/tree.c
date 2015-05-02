@@ -124,7 +124,7 @@ void test_tree__append_node(void)
         tree_create_node(payload3, 0)
     );
 
-    tree = tree_append_node(&tree, tree_create_node(payload4, 0));
+    tree = tree_append_node(tree, tree_create_node(payload4, 0));
 
     cl_assert(tree->childc == 3);
 
