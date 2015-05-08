@@ -47,6 +47,19 @@ struct tree_iterator {
 struct node *tree_create_node(void *payload, int childc, ...);
 
 /**
+ * @brief Appends a new node as child to a given node
+ *
+ * In order to append the child node, a new node is created and all child
+ * pointers are copied over to the new node. The old node is automatically free.
+ *
+ * \param node old node to which the child is appended
+ * \param child the child node which is appended
+ *
+ * \return new tree node with appended child
+ */
+struct node *tree_append_node(struct node *node, struct node *child);
+
+/**
  * @brief Initializes a new tree iterator.
  *
  * \param tree pointer to the tree

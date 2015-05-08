@@ -106,6 +106,33 @@ void test_tree_create(void)
     cl_assert(tree == NULL);
 }
 
+void test_tree__append_node(void)
+{
+    int *payload1 = malloc(sizeof(int));
+    *payload1 = 5;
+    int *payload2 = malloc(sizeof(int));
+    *payload2 = 10;
+    int *payload3 = malloc(sizeof(int));
+    *payload3 = 15;
+    int *payload4 = malloc(sizeof(int));
+    *payload4 = 20;
+
+    struct node *tree = tree_create_node(
+        payload1,
+        2,
+        tree_create_node(payload2, 0),
+        tree_create_node(payload3, 0)
+    );
+
+    tree = tree_append_node(tree, tree_create_node(payload4, 0));
+
+    cl_assert(tree->childc == 3);
+
+    tree_free(&tree, free);
+
+    cl_assert(tree == NULL);
+}
+
 
 void test_tree__iterator_parent_pointers(void)
 {

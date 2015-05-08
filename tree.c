@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdarg.h>
+#include <string.h>
 #include "tree.h"
 
 struct node *node_next_sibling(struct node *node, struct node *parent)
@@ -37,8 +38,28 @@ struct node *tree_create_node(void *payload, int childc, ...)
     return temp;
 }
 
+struct node *tree_append_node(struct node *node, struct node *child)
+{
+    size_t children = node->childc + 1;
+    struct node *new = malloc(sizeof(struct node) + (children * sizeof(struct node *)));
+
+    new->payload = node->payload;
+    new->childc = children;
+    memcpy(new->childv, node->childv, node->childc * sizeof(struct node *));
+    new->childv[children - 1] = child;
+
+    for (int i = 0; i < children; i++) {
+        new->childv[i]->parent = new;
+    }
+
+    free(node);
+
+    return new;
+}
+
 struct tree_iterator *tree_iterator_init(struct node *const *tree,
-        enum iterator_type type) {
+        enum iterator_type type)
+{
     struct tree_iterator *iterator = malloc(sizeof(struct tree_iterator));
     iterator->type = type;
     iterator->current = *tree;
