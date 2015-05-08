@@ -27,7 +27,7 @@ void test_hashmap__put_get_equality(void)
             errors++;
         }
     }
-    hashmap_free(table, NULL);
+    hashmap_free(&table, NULL);
 
     cl_assert(errors == 0);
 }
@@ -44,7 +44,7 @@ void test_hashmap__put_reassign(void)
 
     int capacity = table->capacity;
     int size = table->size;
-    hashmap_free(table, NULL);
+    hashmap_free(&table, NULL);
 
     cl_assert(capacity == HASHMAP_INITIAL_CAPACITY);
     cl_assert(size == 2);
@@ -69,7 +69,7 @@ void test_hashmap__free_values(void)
     int capacity = table->capacity;
     int size = table->size;
 
-    hashmap_free(table, free);
+    hashmap_free(&table, free);
 
     cl_assert(capacity == HASHMAP_INITIAL_CAPACITY);
     cl_assert(size == 2);

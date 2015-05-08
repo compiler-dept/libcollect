@@ -32,22 +32,23 @@ struct hashmap *hashmap_alloc(int capacity)
     return new_table;
 }
 
-void hashmap_free(struct hashmap *table, void (*value_free) (void *ptr))
+void hashmap_free(struct hashmap **table, void (*value_free) (void *ptr))
 {
     if (!table) {
         return;
     }
-    for (int i = 0; i < table->capacity; i++) {
-        if (table->values[i].key) {
-            free(table->values[i].key);
+    for (int i = 0; i < (*table)->capacity; i++) {
+        if ((*table)->values[i].key) {
+            free((*table)->values[i].key);
 
             if (value_free) {
-                value_free(table->values[i].value);
+                value_free((*table)->values[i].value);
             }
         }
     }
-    free(table->values);
-    free(table);
+    free((*table)->values);
+    free(*table);
+    *table = NULL;
 }
 
 struct hashmap *clone_and_double(struct hashmap *table)
@@ -70,7 +71,7 @@ void *hashmap_put(struct hashmap **table, const char *key, void *value)
         *table = hashmap_alloc(HASHMAP_INITIAL_CAPACITY);
     } else if ((*table)->size > 0.7 * (*table)->capacity) {
         struct hashmap *doubled_table = clone_and_double(*table);
-        hashmap_free(*table, NULL);
+        hashmap_free(table, NULL);
         *table = doubled_table;
     }
 
