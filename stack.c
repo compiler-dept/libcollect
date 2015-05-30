@@ -33,6 +33,32 @@ void *stack_pop(struct stack **stack)
     }
 }
 
+void *stack_remove(struct stack **stack, const void *elem)
+{
+    void *ret = NULL;
+
+    if (*stack) {
+        struct stack *temp = NULL;
+        struct stack *prev = NULL;
+        for (temp = *stack; temp != NULL; temp = temp->tail) {
+            if (temp->head == elem) {
+                if (prev) {
+                    prev->tail = temp->tail;
+                } else {
+                    *stack = temp->tail;
+                }
+                ret = temp->head;
+                free(temp);
+                break;
+            }
+
+            prev = temp;
+        }
+    }
+
+    return ret;
+}
+
 void stack_free(struct stack **stack, void (*payload_free) (void *))
 {
     if (*stack) {

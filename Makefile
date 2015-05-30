@@ -1,6 +1,6 @@
 LIB=libcollect.a
 
-CFLAGS+=-g -Wall -std=gnu99
+CFLAGS+=-g -Wall -std=gnu11
 
 SOURCES=$(wildcard *.c)
 OBJECTS=$(patsubst %.c, %.o, $(SOURCES))
