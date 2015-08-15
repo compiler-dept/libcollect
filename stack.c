@@ -33,6 +33,14 @@ void *stack_pop(struct stack **stack)
     }
 }
 
+int stack_size(struct stack *stack){
+    if (!stack){
+        return 0;
+    }
+
+    return 1 + stack_size(stack->tail);
+}
+
 void stack_free(struct stack **stack, void (*payload_free) (void *))
 {
     if (*stack) {

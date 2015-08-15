@@ -39,6 +39,13 @@ void *stack_peek(struct stack *stack);
 void *stack_pop(struct stack **stack);
 
 /**
+ * @brief get number of elements on stack
+ *
+ * \param stack pointer to the stack struct
+ */
+int stack_size(struct stack *stack);
+
+/**
  * @brief free a stack
  *
  * \param stack pointer to the pointer of the stack struct
