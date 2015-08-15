@@ -1,10 +1,9 @@
-#include "clar.h"
-
+#include "../speck.h"
 #include <stdio.h>
 
 #include "../hashmap.h"
 
-void test_hashmap__put_get_equality(void)
+void spec_put_get_equality(void)
 {
     struct hashmap *table = NULL;
 
@@ -29,10 +28,10 @@ void test_hashmap__put_get_equality(void)
     }
     hashmap_free(&table, NULL);
 
-    cl_assert(errors == 0);
+    sp_assert(errors == 0);
 }
 
-void test_hashmap__put_reassign(void)
+void speck_put_reassign(void)
 {
     struct hashmap *table = NULL;
     int values[] = {0,1,2,3,4,5,6,7,8,9};
@@ -46,11 +45,11 @@ void test_hashmap__put_reassign(void)
     int size = table->size;
     hashmap_free(&table, NULL);
 
-    cl_assert(capacity == HASHMAP_INITIAL_CAPACITY);
-    cl_assert(size == 2);
+    sp_assert(capacity == HASHMAP_INITIAL_CAPACITY);
+    sp_assert(size == 2);
 }
 
-void test_hashmap__free_values(void)
+void speck_free_values(void)
 {
     struct hashmap *table = NULL;
     int *values[2];
@@ -71,6 +70,6 @@ void test_hashmap__free_values(void)
 
     hashmap_free(&table, free);
 
-    cl_assert(capacity == HASHMAP_INITIAL_CAPACITY);
-    cl_assert(size == 2);
+    sp_assert(capacity == HASHMAP_INITIAL_CAPACITY);
+    sp_assert(size == 2);
 }

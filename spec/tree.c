@@ -1,9 +1,7 @@
-#include "clar.h"
-
+#include "../speck.h"
 #include "../tree.h"
 
-
-void test_tree__iterator_preorder(void)
+void spec_iterator_preorder(void)
 {
     int values[] = {0,1,2,3,4,5};
 
@@ -26,16 +24,16 @@ void test_tree__iterator_preorder(void)
     struct node *temp = NULL;
     for (int i = 0; i < 6; i++){
         temp = tree_iterator_next(it);
-        cl_assert(*((int*)temp->payload) == values[i]);
+        sp_assert(*((int*)temp->payload) == values[i]);
     }
 
-    cl_assert(tree_iterator_next(it) == NULL);
+    sp_assert(tree_iterator_next(it) == NULL);
     tree_iterator_free(it);
     tree_free(&root, NULL);
-    cl_assert(root == NULL);
+    sp_assert(root == NULL);
 }
 
-void test_tree__iterator_postorder(void)
+void spec_iterator_postorder(void)
 {
     int values[] = {0,1,2,3,4,5};
 
@@ -57,16 +55,16 @@ void test_tree__iterator_postorder(void)
     struct node *temp = NULL;
     for (int i = 0; i < 6; i++){
         temp = tree_iterator_next(it);
-        cl_assert(*((int*)temp->payload) == values[i]);
+        sp_assert(*((int*)temp->payload) == values[i]);
     }
 
-    cl_assert(tree_iterator_next(it) == NULL);
+    sp_assert(tree_iterator_next(it) == NULL);
     tree_iterator_free(it);
     tree_free(&root, NULL);
-    cl_assert(root == NULL);
+    sp_assert(root == NULL);
 }
 
-void test_tree__free(void)
+void spec_free(void)
 {
     struct node *tree = NULL;
 
@@ -82,10 +80,10 @@ void test_tree__free(void)
 
     tree_free(&tree, free);
 
-    cl_assert(tree == NULL);
+    sp_assert(tree == NULL);
 }
 
-void test_tree_create(void)
+void spec_tree_create(void)
 {
     int *payload1 = malloc(sizeof(int));
     *payload1 = 5;
@@ -103,10 +101,10 @@ void test_tree_create(void)
 
     tree_free(&tree, free);
 
-    cl_assert(tree == NULL);
+    sp_assert(tree == NULL);
 }
 
-void test_tree__append_node(void)
+void spec_append_node(void)
 {
     int *payload1 = malloc(sizeof(int));
     *payload1 = 5;
@@ -126,15 +124,15 @@ void test_tree__append_node(void)
 
     tree = tree_append_node(tree, tree_create_node(payload4, 0));
 
-    cl_assert(tree->childc == 3);
+    sp_assert(tree->childc == 3);
 
     tree_free(&tree, free);
 
-    cl_assert(tree == NULL);
+    sp_assert(tree == NULL);
 }
 
 
-void test_tree__iterator_parent_pointers(void)
+void spec_iterator_parent_pointers(void)
 {
     #ifdef TREE_PARENT_POINTERS
         int values[] = {0,1,2,3,4,5};
@@ -159,30 +157,30 @@ void test_tree__iterator_parent_pointers(void)
         // test parents for b
         struct node *temp = b;
         for (int i = 0; i<3; i++){
-            cl_assert(*((int*)temp->payload) == parent_values_b[i]);
+            sp_assert(*((int*)temp->payload) == parent_values_b[i]);
             temp = temp->parent;
         }
-        cl_assert(temp == NULL);
+        sp_assert(temp == NULL);
 
         // test parents for d
         temp = d;
         for (int i = 0; i<3; i++){
-            cl_assert(*((int*)temp->payload) == parent_values_d[i]);
+            sp_assert(*((int*)temp->payload) == parent_values_d[i]);
             temp = temp->parent;
         }
-        cl_assert(temp == NULL);
+        sp_assert(temp == NULL);
 
         // test parents for e
         temp = e;
         for (int i = 0; i<3; i++){
-            cl_assert(*((int*)temp->payload) == parent_values_e[i]);
+            sp_assert(*((int*)temp->payload) == parent_values_e[i]);
             temp = temp->parent;
         }
-        cl_assert(temp == NULL);
+        sp_assert(temp == NULL);
 
         tree_free(&root, NULL);
-        cl_assert(root == NULL);
+        sp_assert(root == NULL);
     #else
-        cl_assert(1);
+        sp_assert(1);
     #endif
 }

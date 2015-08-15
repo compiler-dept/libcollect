@@ -20,6 +20,14 @@ void *stack_peek(struct stack *stack)
     }
 }
 
+int stack_size(struct stack *stack){
+    if (!stack){
+        return 0;
+    }
+
+    return 1 + stack_size(stack->tail);
+}
+
 void *stack_pop(struct stack **stack)
 {
     if (*stack) {
@@ -33,12 +41,30 @@ void *stack_pop(struct stack **stack)
     }
 }
 
-int stack_size(struct stack *stack){
-    if (!stack){
-        return 0;
+void *stack_remove(struct stack **stack, const void *elem)
+{
+    void *ret = NULL;
+
+    if (*stack) {
+        struct stack *temp = NULL;
+        struct stack *prev = NULL;
+        for (temp = *stack; temp != NULL; temp = temp->tail) {
+            if (temp->head == elem) {
+                if (prev) {
+                    prev->tail = temp->tail;
+                } else {
+                    *stack = temp->tail;
+                }
+                ret = temp->head;
+                free(temp);
+                break;
+            }
+
+            prev = temp;
+        }
     }
 
-    return 1 + stack_size(stack->tail);
+    return ret;
 }
 
 void stack_free(struct stack **stack, void (*payload_free) (void *))

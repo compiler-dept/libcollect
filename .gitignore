@@ -28,10 +28,10 @@
 *.x86_64
 *.hex
 
-# Tests
-tests/.clarcache
-tests/clar.suite
-tests/testsuite
+# Speck
+speck
+spec/*.o
+spec/*.so
 
 # Documentation
 docs/html

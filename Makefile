@@ -1,8 +1,8 @@
 LIB=libcollect.a
 
-CFLAGS+=-g -Wall -std=gnu99
+CFLAGS+=-g -Wall -std=gnu11 -fPIC
 
-SOURCES=$(wildcard *.c)
+SOURCES=array_list.c hashmap.c stack.c tree.c
 OBJECTS=$(patsubst %.c, %.o, $(SOURCES))
 
 .PHONY: all test valgrind docs clean style
@@ -12,23 +12,30 @@ all: $(LIB)
 $(LIB): $(OBJECTS)
 	ar -rcs $@ $^
 
-TEST_SOURCES=$(wildcard tests/*.c)
-tests/testsuite: $(LIB)
-	tests/generate.py tests
-	$(CC) $(CFLAGS) -I. -L. -Wno-unused-function -o $@ $(TEST_SOURCES) -lcollect -lm
+TESTS=$(patsubst %.c, %.so, $(wildcard spec/*.c))
 
-test: tests/testsuite
-	tests/testsuite
+spec/%.so: spec/%.c
+	@$(CC) -g -std=gnu11 -fPIC -shared -L. -o $@ $< -lcollect -lm
 
-valgrind: tests/testsuite
-	valgrind --leak-check=full --error-exitcode=1 --suppressions=tests/valgrind.supp tests/testsuite
+speck: $(LIB)
+	$(CC) -g -std=gnu11 -o speck speck.c -ldl
+
+test: speck $(TESTS)
+	@./speck
+
+valgrind: speck $(TESTS)
+	@valgrind --leak-check=full --error-exitcode=1 ./speck
 
 docs:
 	doxygen docs/Doxyfile
 
 clean:
 	rm -f libcollect.a $(OBJECTS)
-	rm -f tests/testsuite tests/.clarcache tests/clar.suite
+	rm -f speck
+	rm -rf speck.dSYM
+	rm -f spec/*.o
+	rm -f spec/*.so
+	rm -rf spec/*.dSYM
 	rm -rf docs/html docs/latex
 
 style:

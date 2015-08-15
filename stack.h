@@ -46,6 +46,14 @@ void *stack_pop(struct stack **stack);
 int stack_size(struct stack *stack);
 
 /**
+ * @brief removes specific element from the stack
+ *
+ * \param stack pointer to the pointer of the stack struct
+ * \param elem pointer the element that should be removed
+ */
+void *stack_remove(struct stack **stack, const void *elem);
+
+/**
  * @brief free a stack
  *
  * \param stack pointer to the pointer of the stack struct

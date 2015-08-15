@@ -1,11 +1,10 @@
-#include "clar.h"
-
+#include "../speck.h"
 #include <stdio.h>
 #include <string.h>
 
 #include "../array_list.h"
 
-void test_array_list__in_out(void)
+void spec_in_out(void)
 {
     struct array_list *al = NULL;
     int i = 5;
@@ -17,18 +16,18 @@ void test_array_list__in_out(void)
     array_list_set(&al, 127, &i);
     array_list_set(&al, 128, &i);
 
-    cl_assert( *((int *)array_list_get(&al, 0)) == 5 );
-    cl_assert( *((int *)array_list_get(&al, 31)) == 5 );
-    cl_assert( *((int *)array_list_get(&al, 32)) == 5 );
-    cl_assert( *((int *)array_list_get(&al, 63)) == 5 );
-    cl_assert( *((int *)array_list_get(&al, 64)) == 5 );
-    cl_assert( *((int *)array_list_get(&al, 127)) == 5 );
-    cl_assert( *((int *)array_list_get(&al, 128)) == 5 );
+    sp_assert( *((int *)array_list_get(&al, 0)) == 5 );
+    sp_assert( *((int *)array_list_get(&al, 31)) == 5 );
+    sp_assert( *((int *)array_list_get(&al, 32)) == 5 );
+    sp_assert( *((int *)array_list_get(&al, 63)) == 5 );
+    sp_assert( *((int *)array_list_get(&al, 64)) == 5 );
+    sp_assert( *((int *)array_list_get(&al, 127)) == 5 );
+    sp_assert( *((int *)array_list_get(&al, 128)) == 5 );
 
     array_list_free(&al, NULL);
 }
 
-void test_array_list__iterator_test(void)
+void spec_iterator_test(void)
 {
     struct array_list *al = NULL;
     char buf[8];
@@ -43,11 +42,11 @@ void test_array_list__iterator_test(void)
     for (int i = 0; i < 100; i++){
         sprintf(buf, "val%i", i);
         temp = array_list_iterator_next(it);
-        cl_assert(strcmp(buf, temp) == 0);
+        sp_assert(strcmp(buf, temp) == 0);
     }
 
     free(it);
     it = NULL;
     array_list_free(&al, free);
-    cl_assert(al == NULL);
+    sp_assert(al == NULL);
 }
