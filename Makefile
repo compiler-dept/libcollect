@@ -2,7 +2,7 @@ LIB=libcollect.a
 
 CFLAGS+=-g -Wall -std=gnu11 -fPIC
 
-SOURCES=array_list.c hashmap.c stack.c tree.c
+SOURCES=array_list.c hashmap.c stack.c deque.c tree.c
 OBJECTS=$(patsubst %.c, %.o, $(SOURCES))
 
 .PHONY: all test valgrind docs clean style
