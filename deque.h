@@ -58,4 +58,12 @@ void *deque_pop_first(struct deque **deque);
  */
 void *deque_pop_last(struct deque **deque);
 
+/**
+ * @brief free a deque
+ *
+ * \param deque pointer to the pointer of the deque struct
+ * \param pointer to custom payload free function
+ */
+void deque_free(struct deque **deque, void (*payload_free) (void *));
+
 #endif

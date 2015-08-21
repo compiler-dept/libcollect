@@ -85,3 +85,13 @@ void *deque_pop_last(struct deque **deque){
 
 	return elem;
 }
+
+void deque_free(struct deque **deque, void (*payload_free) (void *))
+{
+	void *temp;
+	while ((temp = deque_pop_first(deque)) != NULL){
+		if (payload_free){
+			payload_free(temp);
+		}
+	}
+}

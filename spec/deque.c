@@ -49,3 +49,20 @@ void spec_push_pop_equality2(void)
 
 	sp_assert(deque == NULL);
 }
+
+void spec_deque_free(void)
+{
+    int values[] = {1,2,3,4,5,6,7,8,9,0};
+
+    struct deque *deque = NULL;
+
+	for (int i = 0; i < 10; i++) {
+        deque_push_last(&deque, values + i);
+    }
+
+    sp_assert(deque != NULL);
+
+    deque_free(&deque, NULL);
+
+	sp_assert(deque == NULL);
+}
