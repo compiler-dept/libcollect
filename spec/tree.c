@@ -134,53 +134,66 @@ void spec_append_node(void)
 
 void spec_iterator_parent_pointers(void)
 {
-    #ifdef TREE_PARENT_POINTERS
-        int values[] = {0,1,2,3,4,5};
-        int parent_values_b[] = {2,1,0};
-        int parent_values_d[] = {4,3,0};
-        int parent_values_e[] = {5,3,0};
+    int values[] = {0,1,2,3,4,5};
+    int parent_values_b[] = {2,1,0};
+    int parent_values_d[] = {4,3,0};
+    int parent_values_e[] = {5,3,0};
 
-        // construct tree with preorder: 0,1,2,3,4,5
+    // construct tree with preorder: 0,1,2,3,4,5
 
-        // leaf nodes
-        struct node *b = tree_create_node(values + 2, 0);
-        struct node *d = tree_create_node(values + 4, 0);
-        struct node *e = tree_create_node(values + 5, 0);
+    // leaf nodes
+    struct node *b = tree_create_node(values + 2, 0);
+    struct node *d = tree_create_node(values + 4, 0);
+    struct node *e = tree_create_node(values + 5, 0);
 
-        // inner nodes
-        struct node *a = tree_create_node(values + 1, 1, b);
-        struct node *c = tree_create_node(values + 3, 2, d, e);
+    // inner nodes
+    struct node *a = tree_create_node(values + 1, 1, b);
+    struct node *c = tree_create_node(values + 3, 2, d, e);
 
-        // root node
-        struct node *root = tree_create_node(values, 2, a, c);
+    // root node
+    struct node *root = tree_create_node(values, 2, a, c);
 
-        // test parents for b
-        struct node *temp = b;
-        for (int i = 0; i<3; i++){
-            sp_assert(*((int*)temp->payload) == parent_values_b[i]);
-            temp = temp->parent;
-        }
-        sp_assert(temp == NULL);
+    // test parents for b
+    struct node *temp = b;
+    for (int i = 0; i<3; i++){
+        sp_assert(*((int*)temp->payload) == parent_values_b[i]);
+        temp = temp->parent;
+    }
+    sp_assert(temp == NULL);
 
-        // test parents for d
-        temp = d;
-        for (int i = 0; i<3; i++){
-            sp_assert(*((int*)temp->payload) == parent_values_d[i]);
-            temp = temp->parent;
-        }
-        sp_assert(temp == NULL);
+    // test parents for d
+    temp = d;
+    for (int i = 0; i<3; i++){
+        sp_assert(*((int*)temp->payload) == parent_values_d[i]);
+        temp = temp->parent;
+    }
+    sp_assert(temp == NULL);
 
-        // test parents for e
-        temp = e;
-        for (int i = 0; i<3; i++){
-            sp_assert(*((int*)temp->payload) == parent_values_e[i]);
-            temp = temp->parent;
-        }
-        sp_assert(temp == NULL);
+    // test parents for e
+    temp = e;
+    for (int i = 0; i<3; i++){
+        sp_assert(*((int*)temp->payload) == parent_values_e[i]);
+        temp = temp->parent;
+    }
+    sp_assert(temp == NULL);
 
-        tree_free(&root, NULL);
-        sp_assert(root == NULL);
-    #else
-        sp_assert(1);
-    #endif
+    tree_free(&root, NULL);
+    sp_assert(root == NULL);
+}
+
+void spec_append_node_parent_ptr(void)
+{
+    struct node *child_a = tree_create_node(NULL, 0);
+    struct node *child_b = tree_create_node(NULL, 0);
+    struct node *parent = tree_create_node(NULL, 1, child_a);
+    struct node *super_parent = tree_create_node(NULL, 1, parent);
+
+    parent = tree_append_node(parent, child_b);
+
+    sp_assert(super_parent == parent->parent);
+
+    free(child_a);
+    free(child_b);
+    free(parent);
+    free(super_parent);
 }

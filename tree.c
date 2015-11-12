@@ -43,6 +43,7 @@ struct node *tree_append_node(struct node *node, struct node *child)
     size_t children = node->childc + 1;
     struct node *new = malloc(sizeof(struct node) + (children * sizeof(struct node *)));
 
+    new->parent = node->parent;
     new->payload = node->payload;
     new->childc = children;
     memcpy(new->childv, node->childv, node->childc * sizeof(struct node *));
