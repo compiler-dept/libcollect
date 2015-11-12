@@ -20,8 +20,9 @@ void *stack_peek(struct stack *stack)
     }
 }
 
-int stack_size(struct stack *stack){
-    if (!stack){
+int stack_size(struct stack *stack)
+{
+    if (!stack) {
         return 0;
     }
 

@@ -40,22 +40,21 @@ struct node *tree_create_node(void *payload, int childc, ...)
 
 struct node *tree_append_node(struct node *node, struct node *child)
 {
-    size_t children = node->childc + 1;
-    struct node *new = malloc(sizeof(struct node) + (children * sizeof(struct node *)));
+    node->childc += 1;
 
-    new->parent = node->parent;
-    new->payload = node->payload;
-    new->childc = children;
-    memcpy(new->childv, node->childv, node->childc * sizeof(struct node *));
-    new->childv[children - 1] = child;
+    struct node *temp_node = realloc(node, sizeof(struct node) +
+                                     (node->childc * sizeof(struct node *)));
 
-    for (int i = 0; i < children; i++) {
-        new->childv[i]->parent = new;
+    child->parent = temp_node;
+    temp_node->childv[temp_node->childc - 1] = child;
+
+    if (temp_node != node) {
+        for (int i = 0; i < temp_node->childc - 1; i++) {
+            temp_node->childv[i]->parent = temp_node;
+        }
     }
 
-    free(node);
-
-    return new;
+    return temp_node;
 }
 
 struct tree_iterator *tree_iterator_init(struct node *const *tree,

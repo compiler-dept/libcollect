@@ -11,7 +11,7 @@
  */
 struct deque {
     struct deque_node *head;         ///< pointer to first node
-	struct deque_node *tail;         ///< pointer to last node
+    struct deque_node *tail;         ///< pointer to last node
 };
 
 
@@ -20,8 +20,8 @@ struct deque {
  */
 struct deque_node {
     struct deque_node *prev;         ///< pointer to previous node
-	struct deque_node *next;         ///< pointer to next node
-	void *elem;						 ///< pointer to element payload
+    struct deque_node *next;         ///< pointer to next node
+    void *elem;						 ///< pointer to element payload
 };
 
 /**

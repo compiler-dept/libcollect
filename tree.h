@@ -67,7 +67,8 @@ struct node *tree_append_node(struct node *node, struct node *child);
  *
  * \return new iterator
  */
-struct tree_iterator *tree_iterator_init(struct node *const *tree, enum iterator_type type);
+struct tree_iterator *tree_iterator_init(struct node *const *tree,
+        enum iterator_type type);
 
 /**
  * @brief Next node from tree iterator
