@@ -15,7 +15,7 @@ $(LIB): $(OBJECTS)
 SPECK_CFLAGS=-I.
 SPECK_LDFLAGS=-L.
 SPECK_LIBS=-lcollect -lm
-include speck/speck.mk
+-include speck/speck.mk
 
 get-speck:
 	git submodule init
