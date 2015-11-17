@@ -1,9 +1,13 @@
 language: c
+sudo: false
+addons:
+  apt:
+    packages:
+      - valgrind
 compiler:
   - clang
-before_install:
-  - sudo apt-get update -qq
-  - sudo apt-get install -qq valgrind
 script:
+  - make get-speck
+  - make
   - make test
   - make valgrind

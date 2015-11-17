@@ -1,4 +1,4 @@
-#include "../speck.h"
+#include <speck.h>
 #include "../tree.h"
 
 void spec_iterator_preorder(void)

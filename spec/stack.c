@@ -1,5 +1,4 @@
-#include "../speck.h"
-
+#include <speck.h>
 #include "../stack.h"
 
 void spec_push_pop_equality(void)

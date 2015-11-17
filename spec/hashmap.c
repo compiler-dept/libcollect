@@ -1,6 +1,5 @@
-#include "../speck.h"
+#include <speck.h>
 #include <stdio.h>
-
 #include "../hashmap.h"
 
 void spec_put_get_equality(void)

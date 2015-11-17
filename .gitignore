@@ -28,8 +28,7 @@
 *.x86_64
 *.hex
 
-# Speck
-speck
+# Test suites
 spec/*.o
 spec/*.so
 

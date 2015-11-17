@@ -12,27 +12,26 @@ all: $(LIB)
 $(LIB): $(OBJECTS)
 	ar -rcs $@ $^
 
-TESTS=$(patsubst %.c, %.so, $(wildcard spec/*.c))
+SPECK_CFLAGS=-I.
+SPECK_LDFLAGS=-L.
+SPECK_LIBS=-lcollect -lm
+include speck/speck.mk
 
-spec/%.so: spec/%.c
-	@$(CC) -g -std=gnu11 -fPIC -shared -L. -o $@ $< -lcollect -lm
+get-speck:
+	git submodule init
+	git submodule update
 
-speck: $(LIB)
-	$(CC) -g -std=gnu11 -o speck speck.c -ldl
+test: $(SPECK) $(SUITES)
+	@$(SPECK)
 
-test: speck $(TESTS)
-	@./speck
-
-valgrind: speck $(TESTS)
-	@valgrind --leak-check=full --error-exitcode=1 ./speck
+valgrind: $(SPECK) $(SUITES)
+	@valgrind --leak-check=full --error-exitcode=1 $(SPECK)
 
 docs:
 	doxygen docs/Doxyfile
 
 clean:
 	rm -f libcollect.a $(OBJECTS)
-	rm -f speck
-	rm -rf speck.dSYM
 	rm -f spec/*.o
 	rm -f spec/*.so
 	rm -rf spec/*.dSYM
