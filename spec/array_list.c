@@ -31,7 +31,7 @@ void spec_iterator_test(void)
 {
     struct array_list *al = NULL;
     char buf[8];
-    for (int i = 0; i < 100; i++){
+    for (int i = 0; i < 100; i++) {
         sprintf(buf, "val%i", i);
         array_list_set(&al, i, strdup(buf));
     }
@@ -39,7 +39,7 @@ void spec_iterator_test(void)
     struct array_list_iterator *it = array_list_iterator_init(&al);
 
     char *temp = NULL;
-    for (int i = 0; i < 100; i++){
+    for (int i = 0; i < 100; i++) {
         sprintf(buf, "val%i", i);
         temp = array_list_iterator_next(it);
         sp_assert(strcmp(buf, temp) == 0);

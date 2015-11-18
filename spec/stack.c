@@ -3,7 +3,7 @@
 
 void spec_push_pop_equality(void)
 {
-    int values[] = {0,1,2,3,4,5,6,7,8,9};
+    int values[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
     struct stack *stack = NULL;
 
     for (int i = 0; i < 10; i++) {
@@ -85,7 +85,7 @@ void spec_stack_remove_last(void)
 
 void spec_stack_size(void)
 {
-    int values[] = {0,1,2,3,4,5,6,7,8,9};
+    int values[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
     struct stack *stack = NULL;
 
     for (int i = 0; i < 10; i++) {

@@ -38,4 +38,4 @@ clean:
 	rm -rf docs/html docs/latex
 
 style:
-	astyle -A3s4SpHk3jn "*.c" "*.h"
+	astyle -A3s4SpHk3jn "*.c" "*.h" "spec/*.c"
