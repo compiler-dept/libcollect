@@ -99,3 +99,30 @@ void deque_free(struct deque **deque, void (*payload_free) (void *))
         }
     }
 }
+
+struct deque_iterator *deque_iterator_init(struct deque *const *deque)
+{
+    struct deque *temp = *deque;
+    struct deque_iterator *iterator = malloc(sizeof(struct deque_iterator));
+    iterator->current = temp->head;
+
+    return iterator;
+}
+
+void *deque_iterator_next(struct deque_iterator *iterator)
+{
+    if (iterator->current == NULL) {
+        return NULL;
+    }
+
+    void *elem = iterator->current->elem;
+
+    iterator->current = iterator->current->next;
+
+    return elem;
+}
+
+void deque_iterator_free(struct deque_iterator *iterator)
+{
+    free(iterator);
+}

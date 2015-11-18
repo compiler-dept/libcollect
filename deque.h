@@ -25,6 +25,13 @@ struct deque_node {
 };
 
 /**
+ * @brief queue iterator structure
+ */
+struct deque_iterator {
+    struct deque_node *current;
+};
+
+/**
  * @brief push element to front of deque
  *
  * If *deque is NULL, a new deque is initialized.
@@ -64,6 +71,32 @@ void *deque_pop_last(struct deque **deque);
  * \param deque pointer to the pointer of the deque struct
  * \param pointer to custom payload free function
  */
-void deque_free(struct deque **deque, void (*payload_free) (void *));
+void deque_free(struct deque **deque, void (*payload_free)(void *));
+
+/**
+ * @brief Initializes a new deque iterator.
+ *
+ * \param deque pointer to the deque
+ *
+ * \return new iterator
+ */
+struct deque_iterator *deque_iterator_init(struct deque *const *deque);
+
+/**
+ * @brief Next elem from deque iterator
+ *
+ * \param iterator pointer to iterator
+ *
+ * \return next elem from deque
+ */
+void *deque_iterator_next(struct deque_iterator *iterator);
+
+/**
+ * @brief Free iterator
+ *
+ * \param iterator pointer to iterator
+ *
+ */
+void deque_iterator_free(struct deque_iterator *iterator);
 
 #endif
