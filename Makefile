@@ -21,10 +21,10 @@ get-speck:
 	git submodule init
 	git submodule update
 
-test: $(SPECK) $(SUITES)
+test: $(SPECK) $(LIB) $(SUITES)
 	@$(SPECK)
 
-valgrind: $(SPECK) $(SUITES)
+valgrind: $(SPECK) $(LIB) $(SUITES)
 	@valgrind --leak-check=full --error-exitcode=1 $(SPECK)
 
 docs:

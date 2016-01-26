@@ -59,4 +59,15 @@ void *hashmap_put(struct hashmap **table, const char *key, void *value);
  */
 void *hashmap_get(struct hashmap *table, const char *key);
 
+/**
+ * @brief Update a hash table with another hash table.
+ *
+ * This function updates a given hash table by merging in the other hash table.
+ * The values of equal keys are overwritten with the values of the other hash
+ * table.
+ * \param table_a pointer to the pointer of the hash table
+ * \param table_b pointer of the hash table to be merged
+ */
+void hashmap_update(struct hashmap **table_a, struct hashmap *table_b);
+
 #endif /* HASHTABLE_H */

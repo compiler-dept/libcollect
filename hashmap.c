@@ -13,6 +13,7 @@ unsigned long hash(char *str)
     while ((c = *str++)) {
         hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
     }
+
     return hash;
 }
 
@@ -26,17 +27,20 @@ struct hashmap *hashmap_alloc(int capacity)
     new_table->capacity = capacity;
     new_table->size = 0;
     new_table->values = malloc(capacity * sizeof(struct hashmap_entry));
+
     for (int i = 0; i < new_table->capacity; i++) {
         new_table->values[i].key = NULL;
     }
+
     return new_table;
 }
 
-void hashmap_free(struct hashmap **table, void (*value_free) (void *ptr))
+void hashmap_free(struct hashmap **table, void (*value_free)(void *ptr))
 {
-    if (!table) {
+    if (!(*table)) {
         return;
     }
+
     for (int i = 0; i < (*table)->capacity; i++) {
         if ((*table)->values[i].key) {
             free((*table)->values[i].key);
@@ -46,6 +50,7 @@ void hashmap_free(struct hashmap **table, void (*value_free) (void *ptr))
             }
         }
     }
+
     free((*table)->values);
     free(*table);
     *table = NULL;
@@ -56,17 +61,23 @@ struct hashmap *clone_and_double(struct hashmap *table)
     struct hashmap *new_table;
     new_table = hashmap_alloc(2 * table->capacity);
     struct hashmap_entry *entry;
+
     for (int i = 0; i < table->capacity; i++) {
         entry = table->values + i;
         if (entry->key) {
             hashmap_put(&new_table, entry->key, entry->value);
         }
     }
+
     return new_table;
 }
 
 void *hashmap_put(struct hashmap **table, const char *key, void *value)
 {
+    if (!key) {
+        return NULL;
+    }
+
     if (*table == NULL) {
         *table = hashmap_alloc(HASHMAP_INITIAL_CAPACITY);
     } else if ((*table)->size > 0.7 * (*table)->capacity) {
@@ -79,6 +90,7 @@ void *hashmap_put(struct hashmap **table, const char *key, void *value)
     unsigned long position;
     unsigned char reassign = 0;
     int i = 1;
+
     do {
         // Quadratic probing
         position = hashval + ((int)(0.5 * i)) + ((int)(0.5 * i * i));
@@ -88,7 +100,7 @@ void *hashmap_put(struct hashmap **table, const char *key, void *value)
              && !(reassign =
                       strcmp((*table)->values[position].key, key) == 0));
 
-    void *ret = NULL;
+    void *ret = value;
 
     if (!reassign) {
         (*table)->size++;
@@ -99,16 +111,19 @@ void *hashmap_put(struct hashmap **table, const char *key, void *value)
     }
 
     (*table)->values[position].value = value;
+
     return ret;
 }
 
 void *hashmap_get(struct hashmap *table, const char *key)
 {
     void *value = NULL;
+
     if (table) {
         unsigned long hashval = hash((char *)key);
         unsigned long position;
         int i = 1;
+
         do {
             // Quadratic probing
             position =
@@ -117,9 +132,24 @@ void *hashmap_get(struct hashmap *table, const char *key)
             i++;
         } while (table->values[position].key &&
                  strcmp(table->values[position].key, key) != 0);
+
         if (table->values[position].key) {
             value = table->values[position].value;
         }
     }
+
     return value;
+}
+
+void hashmap_update(struct hashmap **table_a, struct hashmap *table_b)
+{
+    if (!table_a || !table_b) {
+        return;
+    }
+
+    for (int i = 0; i < table_b->capacity; i++) {
+        if (table_b->values[i].key) {
+            hashmap_put(table_a, table_b->values[i].key, table_b->values[i].value);
+        }
+    }
 }
