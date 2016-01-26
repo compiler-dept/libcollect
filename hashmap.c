@@ -143,7 +143,7 @@ void *hashmap_get(struct hashmap *table, const char *key)
 
 void hashmap_update(struct hashmap **table_a, struct hashmap *table_b)
 {
-    if (!table_a || !table_b) {
+    if (!table_b) {
         return;
     }
 

@@ -92,6 +92,27 @@ void spec_free_empty_hashmap(void)
     hashmap_free(&hashmap, NULL);
 }
 
+void spec_hashmap_update_empty(void)
+{
+    struct hashmap *table_a = NULL;
+    struct hashmap *table_b = NULL;
+
+    int a = 42;
+
+    int *ret = NULL;
+
+    ret = hashmap_put(&table_b, "a", &a);
+    sp_assert_equal_i(*ret, 42);
+
+    hashmap_update(&table_a, table_b);
+
+    ret = hashmap_get(table_a, "a");
+    sp_assert_equal_i(*ret, 42);
+
+    hashmap_free(&table_a, NULL);
+    hashmap_free(&table_b, NULL);
+}
+
 void spec_hashmap_update(void)
 {
     struct hashmap *table_a = NULL;
