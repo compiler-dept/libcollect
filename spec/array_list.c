@@ -41,7 +41,7 @@ void spec_iterator_test(void)
     char *temp = NULL;
     for (int i = 0; i < 100; i++) {
         sprintf(buf, "val%i", i);
-        temp = array_list_iterator_next(it);
+        temp = array_list_iterator_next(&it);
         sp_assert(strcmp(buf, temp) == 0);
     }
 

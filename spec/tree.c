@@ -23,12 +23,12 @@ void spec_iterator_preorder(void)
 
     struct node *temp = NULL;
     for (int i = 0; i < 6; i++) {
-        temp = tree_iterator_next(it);
+        temp = tree_iterator_next(&it);
         sp_assert(*((int *)temp->payload) == values[i]);
     }
 
-    sp_assert(tree_iterator_next(it) == NULL);
-    tree_iterator_free(it);
+    sp_assert(tree_iterator_next(&it) == NULL);
+    tree_iterator_free(&it);
     tree_free(&root, NULL);
     sp_assert(root == NULL);
 }
@@ -54,12 +54,12 @@ void spec_iterator_postorder(void)
 
     struct node *temp = NULL;
     for (int i = 0; i < 6; i++) {
-        temp = tree_iterator_next(it);
+        temp = tree_iterator_next(&it);
         sp_assert(*((int *)temp->payload) == values[i]);
     }
 
-    sp_assert(tree_iterator_next(it) == NULL);
-    tree_iterator_free(it);
+    sp_assert(tree_iterator_next(&it) == NULL);
+    tree_iterator_free(&it);
     tree_free(&root, NULL);
     sp_assert(root == NULL);
 }
@@ -122,7 +122,7 @@ void spec_append_node(void)
                             tree_create_node(payload3, 0)
                         );
 
-    tree = tree_append_node(tree, tree_create_node(payload4, 0));
+    tree = tree_append_node(&tree, tree_create_node(payload4, 0));
 
     sp_assert(tree->childc == 3);
 
@@ -188,7 +188,7 @@ void spec_append_node_parent_ptr(void)
     struct node *parent = tree_create_node(NULL, 1, child_a);
     struct node *super_parent = tree_create_node(NULL, 1, parent);
 
-    parent = tree_append_node(parent, child_b);
+    parent = tree_append_node(&parent, child_b);
 
     sp_assert(super_parent == parent->parent);
 

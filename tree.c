@@ -38,17 +38,17 @@ struct node *tree_create_node(void *payload, int childc, ...)
     return temp;
 }
 
-struct node *tree_append_node(struct node *node, struct node *child)
+struct node *tree_append_node(struct node **node, struct node *child)
 {
-    node->childc += 1;
+    (*node)->childc += 1;
 
-    struct node *temp_node = realloc(node, sizeof(struct node) +
-                                     (node->childc * sizeof(struct node *)));
+    struct node *temp_node = realloc((*node), sizeof(struct node) +
+                                     ((*node)->childc * sizeof(struct node *)));
 
     child->parent = temp_node;
     temp_node->childv[temp_node->childc - 1] = child;
 
-    if (temp_node != node) {
+    if (temp_node != (*node)) {
         for (int i = 0; i < temp_node->childc - 1; i++) {
             temp_node->childv[i]->parent = temp_node;
         }
@@ -100,33 +100,34 @@ struct node *tree_iterator_next_postorder(struct tree_iterator *iterator)
         next = iterator->current;
 
         iterator->current =
-            node_next_sibling(next, stack_peek(iterator->stack));
+            node_next_sibling(next, stack_peek(&(iterator->stack)));
 
     } else {
         next = (struct node *)stack_pop(&iterator->stack);
         iterator->current =
-            node_next_sibling(next, stack_peek(iterator->stack));
+            node_next_sibling(next, stack_peek(&(iterator->stack)));
     }
 
     return next;
 }
 
-struct node *tree_iterator_next(struct tree_iterator *iterator)
+struct node *tree_iterator_next(struct tree_iterator *const *iterator)
 {
-    switch (iterator->type) {
+    switch ((*iterator)->type) {
         case PREORDER:
-            return tree_iterator_next_preorder(iterator);
+            return tree_iterator_next_preorder((*iterator));
         case POSTORDER:
-            return tree_iterator_next_postorder(iterator);
+            return tree_iterator_next_postorder((*iterator));
         default:
             return NULL;
     }
 }
 
-void tree_iterator_free(struct tree_iterator *iterator)
+void tree_iterator_free(struct tree_iterator **iterator)
 {
-    stack_free(&iterator->stack, NULL);
-    free(iterator);
+    stack_free(&((*iterator)->stack), NULL);
+    free(*iterator);
+    *iterator = NULL;
 }
 
 void tree_free(struct node **tree, void (*payload_free) (void *))
@@ -138,7 +139,7 @@ void tree_free(struct node **tree, void (*payload_free) (void *))
     struct tree_iterator *it = tree_iterator_init(tree, POSTORDER);
     struct node *temp = NULL;
 
-    while ((temp = tree_iterator_next(it))) {
+    while ((temp = tree_iterator_next(&it))) {
         if (payload_free) {
             payload_free(temp->payload);
         }
@@ -147,5 +148,5 @@ void tree_free(struct node **tree, void (*payload_free) (void *))
     }
 
     *tree = NULL;
-    tree_iterator_free(it);
+    tree_iterator_free(&it);
 }

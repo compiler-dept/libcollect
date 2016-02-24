@@ -92,7 +92,21 @@ void spec_stack_size(void)
         stack_push(&stack, values + i);
     }
 
-    sp_assert(stack_size(stack) == 10);
+    sp_assert(stack_size(&stack) == 10);
+
+    stack_free(&stack, NULL);
+}
+
+void spec_stack_peek(void)
+{
+    struct stack *stack = NULL;
+    int value = 42;
+
+    stack_push(&stack, &value);
+
+    int *result = stack_peek(&stack);
+
+    sp_assert_equal_i(*result, value);
 
     stack_free(&stack, NULL);
 }

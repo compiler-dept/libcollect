@@ -57,7 +57,7 @@ struct node *tree_create_node(void *payload, int childc, ...);
  *
  * \return new tree node with appended child
  */
-struct node *tree_append_node(struct node *node, struct node *child);
+struct node *tree_append_node(struct node **node, struct node *child);
 
 /**
  * @brief Initializes a new tree iterator.
@@ -77,7 +77,7 @@ struct tree_iterator *tree_iterator_init(struct node *const *tree,
  *
  * \return next node from tree, depends on type of iterator
  */
-struct node *tree_iterator_next(struct tree_iterator *iterator);
+struct node *tree_iterator_next(struct tree_iterator *const *iterator);
 
 /**
  * @brief Free iterator
@@ -85,7 +85,7 @@ struct node *tree_iterator_next(struct tree_iterator *iterator);
  * \param iterator pointer to iterator
  *
  */
-void tree_iterator_free(struct tree_iterator *iterator);
+void tree_iterator_free(struct tree_iterator **iterator);
 
 /**
  * @brief Frees a tree

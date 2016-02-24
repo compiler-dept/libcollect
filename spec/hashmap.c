@@ -21,7 +21,7 @@ void spec_put_get_equality(void)
     for (int i = 0; i < 512; i++) {
         char key[10];
         sprintf(key, "key%i", i);
-        if (*((int *)hashmap_get(table, key)) != values[i]) {
+        if (*((int *)hashmap_get(&table, key)) != values[i]) {
             errors++;
         }
     }
@@ -106,7 +106,7 @@ void spec_hashmap_update_empty(void)
 
     hashmap_update(&table_a, table_b);
 
-    ret = hashmap_get(table_a, "a");
+    ret = hashmap_get(&table_a, "a");
     sp_assert_equal_i(*ret, 42);
 
     hashmap_free(&table_a, NULL);
@@ -136,7 +136,7 @@ void spec_hashmap_update(void)
     hashmap_update(&table_a, table_b);
 
     /* check if 42 from table_b is now in table_a */
-    ret = hashmap_get(table_a, "b");
+    ret = hashmap_get(&table_a, "b");
     sp_assert_equal_i(*ret, 42);
 
     /* insert 39 into table_b as "a" */
@@ -147,7 +147,7 @@ void spec_hashmap_update(void)
     hashmap_update(&table_a, table_b);
 
     /* check if value of key "a" has been updated to 39 from table_b */
-    ret = hashmap_get(table_a, "a");
+    ret = hashmap_get(&table_a, "a");
     sp_assert_equal_i(*ret, 39);
 
     /* free hashmaps */
