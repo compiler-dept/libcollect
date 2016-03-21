@@ -113,6 +113,22 @@ void spec_hashmap_update_empty(void)
     hashmap_free(&table_b, NULL);
 }
 
+void spec_hashmap_get_missing(void)
+{
+    struct hashmap *table = NULL;
+
+    int a = 42;
+
+    hashmap_put(&table, "foo", &a);
+
+    int *ret = NULL;
+    ret = hashmap_get(&table, "bar");
+
+    sp_assert(ret == NULL);
+
+    hashmap_free(&table, NULL);
+}
+
 void spec_hashmap_update(void)
 {
     struct hashmap *table_a = NULL;
