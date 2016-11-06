@@ -115,11 +115,11 @@ void *hashmap_put(struct hashmap **table, const char *key, void *value)
     return ret;
 }
 
-void *hashmap_get(struct hashmap *table, const char *key)
+void *hashmap_get(struct hashmap *const *table, const char *key)
 {
     void *value = NULL;
 
-    if (table) {
+    if (table && *table) {
         unsigned long hashval = hash((char *)key);
         unsigned long position;
         int i = 1;
@@ -128,13 +128,13 @@ void *hashmap_get(struct hashmap *table, const char *key)
             // Quadratic probing
             position =
                 hashval + ((int)(0.5 * i)) + ((int)(0.5 * i * i));
-            position %= table->capacity;
+            position %= (*table)->capacity;
             i++;
-        } while (table->values[position].key &&
-                 strcmp(table->values[position].key, key) != 0);
+        } while ((*table)->values[position].key &&
+                 strcmp((*table)->values[position].key, key) != 0);
 
-        if (table->values[position].key) {
-            value = table->values[position].value;
+        if ((*table)->values[position].key) {
+            value = (*table)->values[position].value;
         }
     }
 

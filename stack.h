@@ -29,7 +29,7 @@ void stack_push(struct stack **stack, void *elem);
  * This method does not alter the stack.
  * \param stack pointer to the stack struct
  */
-void *stack_peek(struct stack *stack);
+void *stack_peek(struct stack *const *stack);
 
 /**
  * @brief pop an element from the stack
@@ -43,7 +43,7 @@ void *stack_pop(struct stack **stack);
  *
  * \param stack pointer to the stack struct
  */
-int stack_size(struct stack *stack);
+int stack_size(struct stack *const *stack);
 
 /**
  * @brief removes specific element from the stack
@@ -59,6 +59,6 @@ void *stack_remove(struct stack **stack, const void *elem);
  * \param stack pointer to the pointer of the stack struct
  * \param pointer to custom payload free function
  */
-void stack_free(struct stack **stack, void (*payload_free) (void *));
+void stack_free(struct stack **stack, void (*payload_free)(void *));
 
 #endif /* STACK_H */

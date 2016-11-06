@@ -129,22 +129,23 @@ struct array_list_iterator *array_list_iterator_init(struct array_list *const
         malloc(sizeof(struct array_list_iterator));
     it->current_chunk = *al;
     it->current = 0;
+
     return it;
 }
 
-void *array_list_iterator_next(struct array_list_iterator *it)
+void *array_list_iterator_next(struct array_list_iterator *const *it)
 {
     void *elem = NULL;
 
-    if (it->current_chunk) {
-        elem = it->current_chunk->arv[it->current];
+    if ((*it)->current_chunk) {
+        elem = (*it)->current_chunk->arv[(*it)->current];
     }
 
-    if (it->current < it->current_chunk->arc - 1) {
-        it->current++;
+    if ((*it)->current < (*it)->current_chunk->arc - 1) {
+        (*it)->current++;
     } else {
-        it->current = 0;
-        it->current_chunk = it->current_chunk->next;
+        (*it)->current = 0;
+        (*it)->current_chunk = (*it)->current_chunk->next;
     }
 
     return elem;

@@ -89,7 +89,7 @@ struct deque_iterator *deque_iterator_init(struct deque *const *deque);
  *
  * \return next elem from deque
  */
-void *deque_iterator_next(struct deque_iterator *iterator);
+void *deque_iterator_next(struct deque_iterator *const *iterator);
 
 /**
  * @brief Free iterator
@@ -97,6 +97,6 @@ void *deque_iterator_next(struct deque_iterator *iterator);
  * \param iterator pointer to iterator
  *
  */
-void deque_iterator_free(struct deque_iterator *iterator);
+void deque_iterator_free(struct deque_iterator **iterator);
 
 #endif

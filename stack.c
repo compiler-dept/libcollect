@@ -11,22 +11,22 @@ void stack_push(struct stack **stack, void *elem)
     }
 }
 
-void *stack_peek(struct stack *stack)
+void *stack_peek(struct stack *const *stack)
 {
-    if (stack) {
-        return stack->head;
+    if (stack && *stack) {
+        return (*stack)->head;
     } else {
         return NULL;
     }
 }
 
-int stack_size(struct stack *stack)
+int stack_size(struct stack *const *stack)
 {
-    if (!stack) {
+    if (!stack || !(*stack)) {
         return 0;
     }
 
-    return 1 + stack_size(stack->tail);
+    return 1 + stack_size(&((*stack)->tail));
 }
 
 void *stack_pop(struct stack **stack)

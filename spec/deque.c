@@ -80,12 +80,12 @@ void spec_deque_iterator(void)
     struct deque_iterator *itarator = deque_iterator_init(&deque);
 
     int *temp;
-    while ((temp = deque_iterator_next(itarator)) != NULL) {
+    while ((temp = deque_iterator_next(&itarator)) != NULL) {
         sp_assert(values[counter] == *temp);
         counter++;
     }
 
-    deque_iterator_free(itarator);
+    deque_iterator_free(&itarator);
 
     deque_free(&deque, NULL);
 }

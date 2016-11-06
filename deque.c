@@ -90,7 +90,7 @@ void *deque_pop_last(struct deque **deque)
     return elem;
 }
 
-void deque_free(struct deque **deque, void (*payload_free) (void *))
+void deque_free(struct deque **deque, void (*payload_free)(void *))
 {
     void *temp;
     while ((temp = deque_pop_first(deque)) != NULL) {
@@ -109,20 +109,21 @@ struct deque_iterator *deque_iterator_init(struct deque *const *deque)
     return iterator;
 }
 
-void *deque_iterator_next(struct deque_iterator *iterator)
+void *deque_iterator_next(struct deque_iterator *const *iterator)
 {
-    if (iterator->current == NULL) {
+    if ((*iterator)->current == NULL) {
         return NULL;
     }
 
-    void *elem = iterator->current->elem;
+    void *elem = (*iterator)->current->elem;
 
-    iterator->current = iterator->current->next;
+    (*iterator)->current = (*iterator)->current->next;
 
     return elem;
 }
 
-void deque_iterator_free(struct deque_iterator *iterator)
+void deque_iterator_free(struct deque_iterator **iterator)
 {
-    free(iterator);
+    free(*iterator);
+    *iterator = NULL;
 }

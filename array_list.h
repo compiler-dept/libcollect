@@ -68,7 +68,7 @@ struct array_list_iterator *array_list_iterator_init(struct array_list *const *a
  *
  * \return Pointer to the element
  */
-void *array_list_iterator_next(struct array_list_iterator *it);
+void *array_list_iterator_next(struct array_list_iterator *const *it);
 
 /**
  * @brief Frees an array list.
