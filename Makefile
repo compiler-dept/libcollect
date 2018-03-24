@@ -22,10 +22,10 @@ get-speck:
 	git submodule update
 
 test: $(SPECK) $(LIB) $(SUITES)
-	@$(SPECK)
+	@$(SPECK) -f
 
 valgrind: $(SPECK) $(LIB) $(SUITES)
-	@valgrind --leak-check=full --error-exitcode=1 $(SPECK)
+	@valgrind --leak-check=full --error-exitcode=1 $(SPECK) -f
 
 release: CFLAGS = -std=gnu11 -Os -march=native -flto -Wall -Wextra -Wpedantic -Wstrict-overflow -fno-strict-aliasing
 release: $(LIB)
